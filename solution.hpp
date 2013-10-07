@@ -11,8 +11,9 @@ class Solution
 		int score;
 		
 	public:
-		Soltuion(int*, int, Solver&);
-		~Soltuion();
+		Solution(const int*, int, Solver&);
+		~Solution();
+		bool operator==(const Solution&);
 
 		void fitness(Solver&);
 };

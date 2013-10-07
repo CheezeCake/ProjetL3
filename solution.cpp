@@ -2,7 +2,7 @@
 #include "solution.hpp"
 using namespace std;
 
-Solution::Solution(int* parcours, int N, Solver &S)
+Solution::Solution(const int* parcours, int N, Solver &S)
 {
 	this->N = N;
 	
@@ -20,7 +20,21 @@ void Solution::fitness(Solver &S)
 		 score += S.getDistance(parcours[i], parcours[i+1]);
 }
 
-Solution::Solution()
+Solution::~Solution()
 {
 	delete [] parcours;
+}
+
+bool Solution::operator==(const Solution &s)
+{
+	if(score != s.score)
+		return false;
+
+	for(int i = 0; i < N; i++)
+	{
+		if(parcours[i] != s.parcours[i])
+			return false;
+	}
+
+	return true;
 }
