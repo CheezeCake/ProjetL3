@@ -7,12 +7,12 @@ class Solution
 		int *parcours;
 		int N;
 		int score;
-
+		
 	public:
-		Soltuion(int*, int);
+		Soltuion(int*, int, Solver&);
 		~Soltuion();
 
-		void fitness();
+		void fitness(Solver&);
 };
 
 #endif
