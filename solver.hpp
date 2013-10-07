@@ -10,12 +10,15 @@ class Solver
 		std::string *villes;
 		int **distances;
 		int N;
-
+		int taillePI;
 		Solution *population;
 
+		void genererPI();
+
 	public:
-		Solver(std::string*, int**, int);
+		Solver(std::string*, int**, int, int);
 		~Solver();
+
 };
 
 #endif

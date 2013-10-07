@@ -1,10 +1,10 @@
 #include <iostream>
 #include "solver.hpp"
 
-Solver::Solver(string *villes, int **distances, int N)
+Solver::Solver(string *villes, int **distances, int N, int taillePI)
 {
 	this->N = N;
-
+	this->taillePI = taillePI;
 	this->villes = new string[N];
 	this->distances = new int*[N];
 	for(int i = 0; i < N; i++)
@@ -30,3 +30,12 @@ Solver::~Solver()
 	delete [] villes;
 	delete [] distances;
 }
+
+void Solver::genererPI()
+{
+	vector<int> liste(N);
+	for(int i = 0; i < N; i++)
+		liste[i] = i;
+	
+	
+
