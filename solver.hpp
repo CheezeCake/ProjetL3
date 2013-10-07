@@ -14,7 +14,6 @@ class Solver
 		Solution *population;
 
 	public:
-		Solver();
 		Solver(std::string*, int**, int);
 		~Solver();
 };
