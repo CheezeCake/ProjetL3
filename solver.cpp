@@ -1,4 +1,7 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
 #include "solver.hpp"
 
 Solver::Solver(string *villes, int **distances, int N, int taillePI)
@@ -38,4 +41,42 @@ void Solver::genererPI()
 		liste[i] = i;
 	
 	
+	srand(time(NULL));
 
+	int i = 0;
+	int val;
+	int *parcours = new int[N];
+	int j = 0;
+
+	while(i < taillePI)
+	{
+		while(j < N)
+		{
+			val = rand()%(N-j-1);
+			parcours[j] = liste[j];
+			liste.erase(liste.begin()+j);
+			j++;
+		}
+
+		if(!presente(parcours, i))
+		{
+			Solution s(parcours, N, *this);
+			population[i] = s;
+			i++;
+		}
+	}
+
+	delete [] parcours;
+}
+
+bool Solver::presente(int *parcours, int n)
+{
+	Solution s(parcours, N, *this);
+	for(int i = 0; i < n; i++)
+	{
+		if(population[i] == s)
+			return true;
+	}
+
+	return false;
+}

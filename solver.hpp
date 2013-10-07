@@ -14,6 +14,7 @@ class Solver
 		Solution *population;
 
 		void genererPI();
+		bool presente(int*, int);
 
 	public:
 		Solver(std::string*, int**, int, int);
