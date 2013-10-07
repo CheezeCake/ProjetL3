@@ -19,3 +19,8 @@ void Solution::fitness(Solver &S)
 	for(int i = 0; i < N-1; i++)
 		 score += S.getDistance(parcours[i], parcours[i+1]);
 }
+
+Solution::Solution()
+{
+	delete [] parcours;
+}
