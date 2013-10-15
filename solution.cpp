@@ -2,37 +2,44 @@
 #include "solution.hpp"
 using namespace std;
 
-Solution::Solution(const int* parcours, int N, Solver &S)
+Solution::Solution()
+{
+	N = 0;
+	score = 0;
+}
+
+Solution::Solution(const vector<int> &parcours, int N, const vector<vector<int> > &distances)
 {
 	this->N = N;
-	
-	this->parcours = new int[N];
+	this->parcours = parcours;
 
-	for(int i = 0; i < N; i++)
-		this->parcours[i] = parcours[i];
-
-	fitness(S);
-}
-
-void Solution::fitness(Solver &S)
-{
+	score = 0;
 	for(int i = 0; i < N-1; i++)
-		 score += S.getDistance(parcours[i], parcours[i+1]);
+		score += distances[parcours[i]][parcours[i+1]];
 }
 
-Solution::~Solution()
+bool Solution::operator==(const Solution &s) const
 {
-	delete [] parcours;
-}
-
-bool Solution::operator==(const Solution &s)
-{
-	if(score != s.score)
+	if(score != s.score || N != s.N)
 		return false;
 
 	for(int i = 0; i < N; i++)
 	{
 		if(parcours[i] != s.parcours[i])
+			return false;
+	}
+
+	return true;
+}
+
+bool Solution::operator==(const vector<int> &parcours) const
+{
+	if(N != parcours.size())
+		return false;
+
+	for(int i = 0; i < N; i++)
+	{
+		if(this->parcours[i] != parcours[i])
 			return false;
 	}
 
