@@ -56,13 +56,9 @@ void Solver::afficher() const
 
 bool Solver::presente(const vector<double> &parcours, int n) const
 {
-	int N = villes.size();
-
-	Solution s(parcours, N, distances);
 	for(int i = 0; i < n; i++)
 	{
-		//if(population[i] == parcours)
-		if(population[i] == s)
+		if(population[i] == parcours)
 			return true;
 	}
 
