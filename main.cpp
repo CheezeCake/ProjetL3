@@ -37,7 +37,8 @@ int main()
 	distances[2][4] = 450;
 	distances[2][5] = 100;
 
-	Solver S(villes, distances, 6, 5);
+	Solver S(villes, distances, 5);
+	S.afficher();
 
 	return 0;
 }
