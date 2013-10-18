@@ -10,7 +10,6 @@ class Solver
 	private:
 		std::vector<std::string> villes;
 		std::vector<std::vector<int> > distances;
-		int N;
 		int taillePI;
 		std::vector<Solution> population;
 
@@ -18,7 +17,7 @@ class Solver
 		bool presente(const std::vector<int>&, int) const;
 
 	public:
-		Solver(const std::vector<std::string>&, const std::vector<std::vector<int> >&, int, int);
+		Solver(const std::vector<std::string>&, const std::vector<std::vector<int> >&, int);
 		void afficher() const;
 };
 
