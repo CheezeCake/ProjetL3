@@ -4,23 +4,23 @@ using namespace std;
 
 Solution::Solution()
 {
-	N = 0;
 	score = 0;
 }
 
-Solution::Solution(const vector<double> &parcours, int N, const vector<vector<double> > &distances)
+Solution::Solution(const vector<int> &parcours, const vector<vector<double> > &distances)
 {
-	this->N = N;
 	this->parcours = parcours;
-
 	score = 0;
+
+	int N = parcours.size();
 	for(int i = 0; i < N-1; i++)
 		score += distances[parcours[i]][parcours[i+1]];
 }
 
 bool Solution::operator==(const Solution &s) const
 {
-	if(score != s.score || N != s.N)
+	int N = parcours.size();
+	if(score != s.score || N != s.parcours.size())
 		return false;
 
 	for(int i = 0; i < N; i++)
@@ -42,11 +42,12 @@ void Solution::afficher() const
 	cout << parcours[taille-1] << endl;
 }
 
-bool Solution::operator==(const vector<double> &parcours) const
+bool Solution::operator==(const vector<int> &parcours) const
 {
-	if(N != parcours.size())
+	if(this->parcours.size() != parcours.size())
 		return false;
 
+	int N = this->parcours.size();
 	for(int i = 0; i < N; i++)
 	{
 		if(this->parcours[i] != parcours[i])
