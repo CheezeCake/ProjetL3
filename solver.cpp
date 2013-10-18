@@ -19,18 +19,18 @@ Solver::Solver(const vector<string> &villes, const vector<vector<double> > &dist
 void Solver::genererPI()
 {
 	int N = villes.size();
-	vector<int> liste(N);
-	for(int i = 0; i < N; i++)
-		liste[i] = i;
+	vector<int> parcours(N);
+	int val;
+	int i = 0;
 
 	srand(time(NULL));
 
-	vector<int> parcours(N);
-	int i = 0;
-	int val;
-
 	while(i < taillePI)
 	{
+		vector<int> liste(N);
+		for(int i = 0; i < N; i++)
+			liste[i] = i;
+
 		for(int j = 0; j < N; j++)
 		{
 			val = rand()%(N-j);
@@ -38,17 +38,8 @@ void Solver::genererPI()
 			liste.erase(liste.begin()+val);
 		}
 
-		for(int k = 0; k < N; k++)
-			cout << parcours[k] << " ";
-		cout << endl;
-
 		if(!presente(parcours, i))
-		{
-			population[i] = Solution(parcours, distances);
-			i++;
-			cout << "new sol ds pop: ";
-			population[i].afficher();
-		}
+			population[i++] = Solution(parcours, distances);
 	}
 }
 
