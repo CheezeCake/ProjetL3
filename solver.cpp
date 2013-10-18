@@ -47,6 +47,14 @@ void Solver::genererPI()
 	}
 }
 
+void Solver::afficher() const
+{
+	for(int i = 0; i < taillePI; i++)
+	{
+		population[i].afficher();
+	}
+}
+
 bool Solver::presente(const vector<int> &parcours, int n) const
 {
 	Solution s(parcours, N, distances);

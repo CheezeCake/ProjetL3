@@ -12,6 +12,7 @@ class Solution
 		
 	public:
 		Solution();
+		void afficher();
 		Solution(const std::vector<int>&, int, const std::vector<std::vector<int> >&);
 		bool operator==(const Solution&) const;
 		bool operator==(const std::vector<int>&) const;

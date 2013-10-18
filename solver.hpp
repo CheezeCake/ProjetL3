@@ -19,6 +19,7 @@ class Solver
 
 	public:
 		Solver(const std::vector<std::string>&, const std::vector<std::vector<int> >&, int, int);
+		void afficher() const;
 };
 
 #endif
