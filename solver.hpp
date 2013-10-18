@@ -9,15 +9,15 @@ class Solver
 {
 	private:
 		std::vector<std::string> villes;
-		std::vector<std::vector<int> > distances;
+		std::vector<std::vector<double> > distances;
 		int taillePI;
 		std::vector<Solution> population;
 
 		void genererPI();
-		bool presente(const std::vector<int>&, int) const;
+		bool presente(const std::vector<double>&, int) const;
 
 	public:
-		Solver(const std::vector<std::string>&, const std::vector<std::vector<int> >&, int);
+		Solver(const std::vector<std::string>&, const std::vector<std::vector<double> >&, int);
 		void afficher() const;
 };
 

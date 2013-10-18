@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
 	vector<string> villes(6);
-	vector<vector<int> > distances(6);
+	vector<vector<double> > distances(6);
 	for(int i = 0; i < 6; i++)
 	{
 		distances[i].resize(6, 0);

@@ -8,7 +8,7 @@ Solution::Solution()
 	score = 0;
 }
 
-Solution::Solution(const vector<int> &parcours, int N, const vector<vector<int> > &distances)
+Solution::Solution(const vector<double> &parcours, int N, const vector<vector<double> > &distances)
 {
 	this->N = N;
 	this->parcours = parcours;
@@ -42,7 +42,7 @@ void Solution::afficher() const
 	cout << parcours[taille-1] << endl;
 }
 
-bool Solution::operator==(const vector<int> &parcours) const
+bool Solution::operator==(const vector<double> &parcours) const
 {
 	if(N != parcours.size())
 		return false;

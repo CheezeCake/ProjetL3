@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Solver::Solver(const vector<string> &villes, const vector<vector<int> > &distances, int taillePI)
+Solver::Solver(const vector<string> &villes, const vector<vector<double> > &distances, int taillePI)
 {
 	this->taillePI = taillePI;
 	this->villes = villes;
@@ -25,7 +25,7 @@ void Solver::genererPI()
 	
 	srand(time(NULL));
 
-	vector<int> parcours(N);
+	vector<double> parcours(N);
 	int i = 0;
 	int j, val;
 
@@ -54,7 +54,7 @@ void Solver::afficher() const
 		population[i].afficher();
 }
 
-bool Solver::presente(const vector<int> &parcours, int n) const
+bool Solver::presente(const vector<double> &parcours, int n) const
 {
 	int N = villes.size();
 
