@@ -32,7 +32,7 @@ bool Solution::operator==(const Solution &s) const
 	return true;
 }
 
-void Solution::afficher()
+void Solution::afficher() const
 {
 	int taille = parcours.size();
 	for(int i = 0; i < taille-1; i++)
