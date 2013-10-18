@@ -22,28 +22,32 @@ void Solver::genererPI()
 	vector<int> liste(N);
 	for(int i = 0; i < N; i++)
 		liste[i] = i;
-	
+
 	srand(time(NULL));
 
-	vector<double> parcours(N);
+	vector<int> parcours(N);
 	int i = 0;
-	int j, val;
+	int val;
 
 	while(i < taillePI)
 	{
-		j = 0;
-		while(j < N)
+		for(int j = 0; j < N; j++)
 		{
-			val = rand()%(N-j-1);
+			val = rand()%(N-j);
 			parcours[j] = liste[val];
-			liste.erase(liste.begin()+j);
-			j++;
+			liste.erase(liste.begin()+val);
 		}
+
+		for(int k = 0; k < N; k++)
+			cout << parcours[k] << " ";
+		cout << endl;
 
 		if(!presente(parcours, i))
 		{
-			population[i] = Solution(parcours, N, distances);
+			population[i] = Solution(parcours, distances);
 			i++;
+			cout << "new sol ds pop: ";
+			population[i].afficher();
 		}
 	}
 }
@@ -54,7 +58,7 @@ void Solver::afficher() const
 		population[i].afficher();
 }
 
-bool Solver::presente(const vector<double> &parcours, int n) const
+bool Solver::presente(const vector<int> &parcours, int n) const
 {
 	for(int i = 0; i < n; i++)
 	{

@@ -14,7 +14,7 @@ class Solver
 		std::vector<Solution> population;
 
 		void genererPI();
-		bool presente(const std::vector<double>&, int) const;
+		bool presente(const std::vector<int>&, int) const;
 
 	public:
 		Solver(const std::vector<std::string>&, const std::vector<std::vector<double> >&, int);
