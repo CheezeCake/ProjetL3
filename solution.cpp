@@ -47,7 +47,7 @@ void Solution::afficher() const
 		cout << parcours[i] << " -> ";
 	}
 
-	cout << parcours[taille-1] << " | score = " << score << "\n";
+	cout << parcours[taille-1] << " ( " << score << " ) " << endl;
 }
 
 bool Solution::operator==(const vector<int> &parcours) const
