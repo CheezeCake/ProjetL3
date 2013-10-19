@@ -21,7 +21,5 @@ int main(int argc, char **argv)
 	S.afficher();
 	*/
 
-	Solver S(argv[1]);
-	S.afficher();
 	return 0;
 }
