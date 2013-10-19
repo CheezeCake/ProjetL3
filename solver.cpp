@@ -17,6 +17,35 @@ Solver::Solver(const vector<string> &villes, const vector<vector<double> > &dist
 	genererPI();
 }
 
+Solver::Solver(const string &nomFichier)
+{
+	ifstream flux(nomFichier.c_str());
+
+	int nb, a, b;
+	double dist;
+	flux >> nb;
+	taillePI = 10;
+
+	population.resize(taillePI);
+	distances.resize(nb);
+	villes.resize(nb);
+
+	for(int i = 0; i < nb; i++)
+	{
+		villes[i] = i;
+		distances[i].resize(nb);
+	}
+	while(!flux.eof())
+	{
+		flux >> a;
+		flux >> b;
+		flux >> dist;
+		distances[a][b] = dist;
+		distances[b][a] = dist;
+	}
+	genererPI();
+}
+
 void Solver::genererPI()
 {
 	int N = villes.size();
