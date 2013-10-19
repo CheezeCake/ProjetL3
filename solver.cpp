@@ -34,13 +34,15 @@ Solver::Solver(string nomFichier)
 	{
 		villes[i] = i;
 		distances[i].resize(nb);
+	}
+	while(!flux.eof())
+	{
 		flux >> a;
 		flux >> b;
 		flux >> dist;
 		distances[a][b] = dist;
 		distances[b][a] = dist;
 	}
-	cout << endl << "PI" << endl;
 	genererPI();
 }
 
