@@ -32,6 +32,7 @@ Solver::Solver(string nomFichier)
 
 	for(int i = 0; i < nb; i++)
 	{
+		villes[i] = i;
 		distances[i].resize(nb);
 		flux >> a;
 		flux >> b;
@@ -39,6 +40,7 @@ Solver::Solver(string nomFichier)
 		distances[a][b] = dist;
 		distances[b][a] = dist;
 	}
+	cout << endl << "PI" << endl;
 	genererPI();
 }
 
