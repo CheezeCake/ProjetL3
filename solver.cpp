@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <set>
 #include <fstream>
 #include "solver.hpp"
 
@@ -88,4 +89,28 @@ bool Solver::presente(const vector<int> &parcours, int n) const
 	}
 
 	return false;
+}
+
+void Solver::selectionRoulette()
+{
+	int N = population.size();
+	selection.resize(N/2);
+
+	vector<double> bornesSup(N);
+	valeurs[0] = population[0].getScore()/N;
+	for(int i = 0; i < N; i++)
+		valeurs[i] = valeurs[i-1]+population[i].getScore()/N;
+
+	set<int> selectedSet;
+	int i = 0;
+
+	srand(time(NULL));
+
+	while(i < N/2)
+	{
+		int v = getSegmentId(bornesSup, rand());
+
+		if(selectedSet.insert(v).second)
+			selection[i++] = v;
+	}
 }
