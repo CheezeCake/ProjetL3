@@ -28,8 +28,8 @@ void Solver::genererPI()
 	while(i < taillePI)
 	{
 		vector<int> liste(N);
-		for(int i = 0; i < N; i++)
-			liste[i] = i;
+		for(int j = 0; j < N; j++)
+			liste[j] = j;
 
 		for(int j = 0; j < N; j++)
 		{
