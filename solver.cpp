@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <fstream>
 #include "solver.hpp"
 
 using namespace std;
@@ -13,6 +14,31 @@ Solver::Solver(const vector<string> &villes, const vector<vector<double> > &dist
 	this->distances = distances;
 
 	population.resize(taillePI);
+	genererPI();
+}
+
+Solver::Solver(string nomFichier)
+{
+	ifstream flux(nomFichier.c_str());
+
+	int nb, a, b;
+	double dist;
+	flux >> nb;
+	taillePI = 10;
+
+	population.resize(taillePI);
+	distances.resize(nb);
+	villes.resize(nb);
+
+	for(int i = 0; i < nb; i++)
+	{
+		distances[i].resize(nb);
+		flux >> a;
+		flux >> b;
+		flux >> dist;
+		distances[a][b] = dist;
+		distances[b][a] = dist;
+	}
 	genererPI();
 }
 

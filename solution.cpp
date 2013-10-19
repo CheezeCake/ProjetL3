@@ -16,7 +16,7 @@ Solution::Solution(const vector<int> &parcours, const vector<vector<double> > &d
 	for(int i = 0; i < N-1; i++)
 		score += distances[parcours[i]][parcours[i+1]];
 
-	score += distances[N-1][parcours[0]];
+	score += distances[parcours[N-1]][parcours[0]];
 }
 
 double Solution::getScore() const
