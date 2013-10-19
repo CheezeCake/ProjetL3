@@ -46,15 +46,16 @@ void Solution::afficher() const
 	{
 		cout << parcours[i] << " -> ";
 	}
-	cout << parcours[taille-1] << endl;
+
+	cout << parcours[taille-1] << " | score = " << score << "\n";
 }
 
 bool Solution::operator==(const vector<int> &parcours) const
 {
-	if(this->parcours.size() != parcours.size())
+	int N = this->parcours.size();
+	if(N != parcours.size())
 		return false;
 
-	int N = this->parcours.size();
 	for(int i = 0; i < N; i++)
 	{
 		if(this->parcours[i] != parcours[i])
