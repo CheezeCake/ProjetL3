@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
-#include <set>
 #include <fstream>
 #include "solver.hpp"
 
@@ -94,47 +93,50 @@ bool Solver::presente(const vector<int> &parcours, int n) const
 void Solver::selectionRoulette()
 {
 	int N = population.size();
-	selection.resize(N/2);
+	int n = N/2;
 
-	vector<int> bornesSup(N);
-	bornesSup[0] = population[0].getScore()/N;
-	for(int i = 0; i < N; i++)
-		bornesSup[i] = (bornesSup[i-1]+population[i].getScore())/N;
+	selection.resize(n);
 
-	set<int> selectedSet;
-	int i = 0;
+	vector<Secteur> secteurs(N);
+	secteurs[0].bi = 0;
+	secteurs[0].bs = population[0].getScore()/N;
+	secteurs[0].indice = 0;
+
+	for(int i = 1; i < N; i++)
+	{
+		secteurs[i].bi = secteurs[i-1].bs+1;
+		secteurs[i].bs = secteurs[i].bi+(population[i].getScore()/N);
+		secteurs[i].indice = i;
+	}
 
 	srand(time(NULL));
 
-	while(i < N/2)
+	for(int i = 0; i < n; i++)
 	{
-		int v = getSecteurId(bornesSup, rand());
-
-		if(selectedSet.insert(v).second)
-			selection[i++] = v;
+		int id = getSecteurId(secteurs, rand()%(secteurs.back().bs+1));
+		selection[i] = secteurs[id].indice;
+		secteurs.erase(secteurs.begin()+id);
 	}
 }
 
-int Solver::getSecteurId(const vector<int> &bornesSup, int val)
+int Solver::getSecteurId(const vector<Secteur> &secteurs, int val)
 {
-	int n = bornesSup.size();
 	int d = 0;
-	int f = n-1;
-	int m;
+	int f = secteurs.size()-1;
+	int m = 0;
 	bool trouve = false;
 
 	while(f >= d && !trouve)
 	{
 		m = (d+f)/2;
-		int bi = (m == 0) ? 0 : bornesSup[m-1];
 
-		if(val >= bi && val <= bornesSup[m])
-			trouve = true;
-		else if(bornesSup[m] > val)
+		if(secteurs[m].bi > val)
 			f = m-1;
-		else
+		else if(secteurs[m].bs < val)
 			d = m+1;
+		else
+			trouve = true;
 	}
 
-	return trouve ? m : -1;
+	return m;
 }
