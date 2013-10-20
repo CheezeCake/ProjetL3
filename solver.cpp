@@ -99,7 +99,7 @@ void Solver::selectionRoulette()
 
 	selection.resize(n);
 
-	vector<Secteur> secteurs(N);
+	vector<Secteur<double> > secteurs(N);
 	secteurs[0].bi = 0;
 	secteurs[0].bs = roundDistance(population[0].getScore());
 	secteurs[0].indice = 0;
@@ -124,7 +124,8 @@ void Solver::selectionRoulette()
 	}
 }
 
-int Solver::getSecteurId(const vector<Secteur> &secteurs, double val)
+template<typename T>
+int Solver::getSecteurId(const vector<Secteur<T> > &secteurs, T val)
 {
 	int d = 0;
 	int f = secteurs.size()-1;

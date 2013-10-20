@@ -5,10 +5,11 @@
 #include <string>
 #include "solution.hpp"
 
+template<typename T>
 struct Secteur
 {
-	double bi;
-	double bs;
+	T bi;
+	T bs;
 	int indice;
 };
 
@@ -23,7 +24,8 @@ class Solver
 
 		void genererPI();
 		bool presente(const std::vector<int>&, int) const;
-		static int getSecteurId(const std::vector<Secteur>&, double);
+		template<typename T>
+		static int getSecteurId(const std::vector<Secteur<T> >&, T);
 
 	public:
 		Solver(const std::vector<std::string>&, const std::vector<std::vector<double> >&, int);
