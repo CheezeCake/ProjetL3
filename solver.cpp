@@ -124,6 +124,46 @@ void Solver::selectionRoulette()
 	}
 }
 
+void Solver::selectionRang()
+{
+	int N = population.size();
+	int n = N/2;
+
+	selection.resize(n);
+
+	vector<pair<int, Solution> > cpop(N);
+	for(int i = 0; i < N; i++)
+	{
+		cpop[i].first = i;
+		cpop[i].second = population[i];
+	}
+
+	sort(cpop.begin(), cpop.end(), cmp);
+
+	vector<Secteur<int> > secteurs(N);
+	secteurs[0].bi = 0;
+	secteurs[0].bs = N;
+	secteurs[0].indice = 0;
+
+	for(int i = 1; i < N; i++)
+	{
+		secteurs[i].bi = secteurs[i-1].bs+1;
+		secteurs[i].bs = secteurs[i].bi+N-i;
+		secteurs[i].indice = i;
+	}
+
+	srand(time(NULL));
+
+	for(int i = 0; i < n; i++)
+	{
+		int iRand = rand()%(secteurs.back().bs+1);
+
+		int id = getSecteurId(secteurs, iRand);
+		selection[i] = secteurs[id].indice;
+		secteurs.erase(secteurs.begin()+id);
+	}
+}
+
 template<typename T>
 int Solver::getSecteurId(const vector<Secteur<T> > &secteurs, T val)
 {
@@ -151,4 +191,9 @@ double Solver::roundDistance(double v)
 {
 	int dixPn = pow(10.0, DECIMALES_DISTANCES);
 	return (floor(v*dixPn+0.5)/dixPn);
+}
+
+bool Solver::cmp(const pair<int, Solution> &a, const pair<int, Solution> &b)
+{
+	return (a.second.getScore() < b.second.getScore());
 }
