@@ -23,7 +23,7 @@ class Solver
 		std::vector<int> selection;
 
 		void genererPI();
-		bool presente(const std::vector<int>&, int) const;
+		inline bool presente(const std::vector<int>&, int) const;
 		template<typename T>
 		static int getSecteurId(const std::vector<Secteur<T> >&, T);
 
