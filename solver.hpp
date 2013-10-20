@@ -1,4 +1,4 @@
-#ifndef	SOLVER_HPP
+#ifndef SOLVER_HPP
 #define SOLVER_HPP
 
 #include <vector>
