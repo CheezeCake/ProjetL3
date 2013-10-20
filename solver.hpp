@@ -7,8 +7,8 @@
 
 struct Secteur
 {
-	int bi;
-	int bs;
+	double bi;
+	double bs;
 	int indice;
 };
 
@@ -23,7 +23,7 @@ class Solver
 
 		void genererPI();
 		bool presente(const std::vector<int>&, int) const;
-		static int getSecteurId(const std::vector<Secteur>&, int);
+		static int getSecteurId(const std::vector<Secteur>&, double);
 
 	public:
 		Solver(const std::vector<std::string>&, const std::vector<std::vector<double> >&, int);
@@ -34,6 +34,8 @@ class Solver
 		void selectionRang();
 		void selectionTournoi();
 		void selectionElitisme();
+
+		static inline double roundDistance(double);
 };
 
 #endif
