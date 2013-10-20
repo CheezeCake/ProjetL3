@@ -96,10 +96,10 @@ void Solver::selectionRoulette()
 	int N = population.size();
 	selection.resize(N/2);
 
-	vector<double> bornesSup(N);
-	valeurs[0] = population[0].getScore()/N;
+	vector<int> bornesSup(N);
+	bornesSup[0] = population[0].getScore()/N;
 	for(int i = 0; i < N; i++)
-		valeurs[i] = valeurs[i-1]+population[i].getScore()/N;
+		bornesSup[i] = (bornesSup[i-1]+population[i].getScore())/N;
 
 	set<int> selectedSet;
 	int i = 0;
@@ -108,9 +108,33 @@ void Solver::selectionRoulette()
 
 	while(i < N/2)
 	{
-		int v = getSegmentId(bornesSup, rand());
+		int v = getSecteurId(bornesSup, rand());
 
 		if(selectedSet.insert(v).second)
 			selection[i++] = v;
 	}
+}
+
+int Solver::getSecteurId(const vector<int> &bornesSup, int val)
+{
+	int n = bornesSup.size();
+	int d = 0;
+	int f = n-1;
+	int m;
+	bool trouve = false;
+
+	while(f >= d && !trouve)
+	{
+		m = (d+f)/2;
+		int bi = (m == 0) ? 0 : bornesSup[m-1];
+
+		if(val >= bi && val <= bornesSup[m])
+			trouve = true;
+		else if(bornesSup[m] > val)
+			f = m-1;
+		else
+			d = m+1;
+	}
+
+	return trouve ? m : -1;
 }
