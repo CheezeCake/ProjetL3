@@ -16,7 +16,7 @@ class Solver
 
 		void genererPI();
 		bool presente(const std::vector<int>&, int) const;
-		int getSecteurId(const std::vector<int>&, int);
+		static int getSecteurId(const std::vector<int>&, int);
 
 	public:
 		Solver(const std::vector<std::string>&, const std::vector<std::vector<double> >&, int);
