@@ -100,25 +100,28 @@ void Solver::selectionRoulette()
 	selection.resize(n);
 
 	vector<Secteur<double> > secteurs(N);
-	secteurs[0].bi = 0;
-	secteurs[0].bs = roundDistance(population[0].getScore());
-	secteurs[0].indice = 0;
-
-	for(int i = 1; i < N; i++)
-	{
-		secteurs[i].bi = secteurs[i-1].bs+DIST_MIN_NN;
-		secteurs[i].bs = roundDistance(secteurs[i].bi+population[i].getScore());
+	for(int i = 0; i < N; i++)
 		secteurs[i].indice = i;
-	}
 
 	srand(time(NULL));
 
+	secteurs[0].bi = 0;
+	secteurs[0].bs = roundDistance(population[0].getScore());
+	int id = 1;
+
 	for(int i = 0; i < n; i++)
 	{
+		for(int j = id; j < N-i; j++)
+		{
+			int indice = secteurs[j].indice;
+			secteurs[j].bi = secteurs[j-1].bs+DIST_MIN_NN;
+			secteurs[j].bs = roundDistance(secteurs[j].bi+population[indice].getScore());
+		}
+
 		double dRand = (static_cast<double>(rand())/RAND_MAX)*secteurs.back().bs;
 		dRand = roundDistance(dRand);
 
-		int id = getSecteurId(secteurs, dRand);
+		id = getSecteurId(secteurs, dRand);
 		selection[i] = secteurs[id].indice;
 		secteurs.erase(secteurs.begin()+id);
 	}
@@ -141,24 +144,27 @@ void Solver::selectionRang()
 	sort(cpop.begin(), cpop.end(), cmp);
 
 	vector<Secteur<int> > secteurs(N);
-	secteurs[0].bi = 0;
-	secteurs[0].bs = N;
-	secteurs[0].indice = 0;
-
-	for(int i = 1; i < N; i++)
-	{
-		secteurs[i].bi = secteurs[i-1].bs+1;
-		secteurs[i].bs = secteurs[i].bi+N-i;
+	for(int i = 0; i < N; i++)
 		secteurs[i].indice = i;
-	}
 
 	srand(time(NULL));
 
+	secteurs[0].bi = 0;
+	secteurs[0].bs = N;
+	int id = 1;
+
 	for(int i = 0; i < n; i++)
 	{
+		for(int j = id; j < N-i; j++)
+		{
+			int indice = secteurs[j].indice;
+			secteurs[j].bi = secteurs[j-1].bs+1;
+			secteurs[j].bs = secteurs[j].bi+N-indice;
+		}
+
 		int iRand = rand()%(secteurs.back().bs+1);
 
-		int id = getSecteurId(secteurs, iRand);
+		id = getSecteurId(secteurs, iRand);
 		selection[i] = secteurs[id].indice;
 		secteurs.erase(secteurs.begin()+id);
 	}
