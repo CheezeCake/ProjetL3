@@ -2,8 +2,10 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <cmath>
 #include <fstream>
 #include "solver.hpp"
+#include "config.hpp"
 
 using namespace std;
 
@@ -99,13 +101,13 @@ void Solver::selectionRoulette()
 
 	vector<Secteur> secteurs(N);
 	secteurs[0].bi = 0;
-	secteurs[0].bs = population[0].getScore()/N;
+	secteurs[0].bs = roundDistance(population[0].getScore());
 	secteurs[0].indice = 0;
 
 	for(int i = 1; i < N; i++)
 	{
-		secteurs[i].bi = secteurs[i-1].bs+1;
-		secteurs[i].bs = secteurs[i].bi+(population[i].getScore()/N);
+		secteurs[i].bi = secteurs[i-1].bs+DIST_MIN_NN;
+		secteurs[i].bs = roundDistance(secteurs[i].bi+population[i].getScore());
 		secteurs[i].indice = i;
 	}
 
@@ -113,13 +115,16 @@ void Solver::selectionRoulette()
 
 	for(int i = 0; i < n; i++)
 	{
-		int id = getSecteurId(secteurs, rand()%(secteurs.back().bs+1));
+		double dRand = (static_cast<double>(rand())/RAND_MAX)*secteurs.back().bs;
+		dRand = roundDistance(dRand);
+
+		int id = getSecteurId(secteurs, dRand);
 		selection[i] = secteurs[id].indice;
 		secteurs.erase(secteurs.begin()+id);
 	}
 }
 
-int Solver::getSecteurId(const vector<Secteur> &secteurs, int val)
+int Solver::getSecteurId(const vector<Secteur> &secteurs, double val)
 {
 	int d = 0;
 	int f = secteurs.size()-1;
@@ -139,4 +144,10 @@ int Solver::getSecteurId(const vector<Secteur> &secteurs, int val)
 	}
 
 	return m;
+}
+
+double Solver::roundDistance(double v)
+{
+	int dixPn = pow(10.0, DECIMALES_DISTANCES);
+	return (floor(v*dixPn+0.5)/dixPn);
 }
