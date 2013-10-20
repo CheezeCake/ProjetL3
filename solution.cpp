@@ -64,3 +64,8 @@ bool Solution::operator==(const vector<int> &parcours) const
 
 	return true;
 }
+
+bool Solution::operator<(const Solution &s) const
+{
+	return (score < s.score);
+}

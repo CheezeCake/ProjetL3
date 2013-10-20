@@ -16,6 +16,7 @@ class Solution
 		Solution(const std::vector<int>&, const std::vector<std::vector<double> >&);
 		bool operator==(const Solution&) const;
 		bool operator==(const std::vector<int>&) const;
+		bool operator<(const Solution&) const;
 };
 
 #endif
