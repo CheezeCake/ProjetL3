@@ -105,17 +105,16 @@ void Solver::selectionRoulette()
 
 	srand(time(NULL));
 
-	secteurs[0].bi = 0;
-	secteurs[0].bs = roundDistance(population[0].getScore());
-	int id = 1;
-
+	double maxDistance = max_element(population.begin(),
+	                                 population.end())->getScore()+DIST_MIN_NN;
+	int id = 0;
 	for(int i = 0; i < n; i++)
 	{
 		for(int j = id; j < N-i; j++)
 		{
 			int indice = secteurs[j].indice;
-			secteurs[j].bi = secteurs[j-1].bs+DIST_MIN_NN;
-			secteurs[j].bs = roundDistance(secteurs[j].bi+population[indice].getScore());
+			secteurs[j].bi = (j == 0) ? 0 : secteurs[j-1].bs+DIST_MIN_NN;
+			secteurs[j].bs = secteurs[j].bi+maxDistance-population[indice].getScore();
 		}
 
 		double dRand = (static_cast<double>(rand())/RAND_MAX)*secteurs.back().bs;
