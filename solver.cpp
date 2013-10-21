@@ -154,7 +154,7 @@ void Solver::selectionRang()
 		for(int j = id; j < N-i; j++)
 		{
 			int indice = secteurs[j].indice;
-			secteurs[j].bi = if(j == 0) ? 0 : secteurs[j-1].bs+1;
+			secteurs[j].bi = (j == 0) ? 0 : secteurs[j-1].bs+1;
 			secteurs[j].bs = secteurs[j].bi+N-indice;
 		}
 
@@ -197,5 +197,5 @@ double Solver::roundDistance(double v)
 
 bool Solver::cmp(const pair<int, Solution> &a, const pair<int, Solution> &b)
 {
-	return (a.second.getScore() < b.second.getScore());
+	return (a.second < b.second);
 }
