@@ -148,16 +148,13 @@ void Solver::selectionRang()
 
 	srand(time(NULL));
 
-	secteurs[0].bi = 0;
-	secteurs[0].bs = N;
-	int id = 1;
-
+	int id = 0;
 	for(int i = 0; i < n; i++)
 	{
 		for(int j = id; j < N-i; j++)
 		{
 			int indice = secteurs[j].indice;
-			secteurs[j].bi = secteurs[j-1].bs+1;
+			secteurs[j].bi = if(j == 0) ? 0 : secteurs[j-1].bs+1;
 			secteurs[j].bs = secteurs[j].bi+N-indice;
 		}
 
