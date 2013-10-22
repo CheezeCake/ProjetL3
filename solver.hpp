@@ -34,6 +34,7 @@ class Solver
 		Solver(const std::string&);
 
 		void afficher() const;
+		void afficherSelection() const;
 		void selectionRoulette();
 		void selectionRang();
 		void selectionTournoi();
