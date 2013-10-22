@@ -4,6 +4,7 @@
 #include <vector>
 #include <cmath>
 #include <fstream>
+#include <algorithm>
 #include "solver.hpp"
 #include "config.hpp"
 
@@ -79,6 +80,15 @@ void Solver::afficher() const
 {
 	for(int i = 0; i < taillePI; i++)
 		population[i].afficher();
+}
+
+void Solver::afficherSelection() const
+{
+	int taille = selection.size();
+	for(int i = 0; i < taille; i++)
+	{
+		population[selection[i]].afficher();
+	}
 }
 
 bool Solver::presente(const vector<int> &parcours, int n) const
@@ -165,6 +175,67 @@ void Solver::selectionRang()
 		secteurs.erase(secteurs.begin()+id);
 	}
 }
+
+void Solver::selectionTournoi()
+{
+	int N = population.size();
+	int n;
+	if( N % 2 == 0) n = N/2;
+	else n = (N-1)/2;
+	selection.resize(n);
+	int choix, min;
+
+	for(int i = 0; i < n; i++)
+	{
+		min = population[i].getScore();
+		choix = i;
+		if(population[i+n].getScore() < min)
+			choix = i + n;
+		selection[i] = choix;
+	}
+}
+
+	
+
+void Solver::selectionElitisme()
+{
+	int N = population.size();
+	int taille = N/2;
+	vector<bool>select(N);
+	int max = 0;
+	for(int j = 0; j < N; j++)
+	{
+		select[j] = false;
+		if(population[j].getScore() > max)
+			max = population[j].getScore();
+	}
+	int i = 0;
+	int choix = 0;
+
+
+	int min = population[i].getScore();
+	selection.resize(taille);
+
+	while(i < taille)
+	{
+		min = max;
+		for(int y = 0; y < N; y++)
+		{
+			if(!select[y])
+			{
+				if(population[y].getScore() < min)
+				{
+					min = population[y].getScore();
+					choix = y;
+				}
+			}
+		}
+		select[choix] = true;
+		selection[i] = choix;
+		i++;
+	}
+}
+		
 
 template<typename T>
 int Solver::getSecteurId(const vector<Secteur<T> > &secteurs, T val)
