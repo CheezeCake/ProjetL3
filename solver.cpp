@@ -60,14 +60,16 @@ void Solver::genererPI()
 
 	while(i < taillePI)
 	{
-		vector<int> liste(N);
-		for(int j = 0; j < N; j++)
-			liste[j] = j;
+		vector<int> liste(N-1);
+		for(int j = 0; j < N-1; j++)
+			liste[j] = j+1;
 
-		for(int j = 0; j < N; j++)
+		parcours[0] = 0;
+		for(int j = 0; j < N-1; j++)
 		{
-			val = rand()%(N-j);
-			parcours[j] = liste[val];
+			val = rand()%(N-j-1);
+			//cout << "val = " << val << "\n";
+			parcours[j+1] = liste[val];
 			liste.erase(liste.begin()+val);
 		}
 
