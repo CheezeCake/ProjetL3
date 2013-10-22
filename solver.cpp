@@ -154,7 +154,7 @@ void Solver::selectionRang()
 
 	vector<Secteur<int> > secteurs(N);
 	for(int i = 0; i < N; i++)
-		secteurs[i].indice = i;
+		secteurs[i].indice = cpop[i].first;
 
 	srand(time(NULL));
 
@@ -165,7 +165,7 @@ void Solver::selectionRang()
 		{
 			int indice = secteurs[j].indice;
 			secteurs[j].bi = (j == 0) ? 0 : secteurs[j-1].bs+1;
-			secteurs[j].bs = secteurs[j].bi+N-indice;
+			secteurs[j].bs = secteurs[j].bi+N-j-i;
 		}
 
 		int iRand = rand()%(secteurs.back().bs+1);
@@ -194,8 +194,6 @@ void Solver::selectionTournoi()
 		selection[i] = choix;
 	}
 }
-
-	
 
 void Solver::selectionElitisme()
 {
@@ -235,7 +233,6 @@ void Solver::selectionElitisme()
 		i++;
 	}
 }
-		
 
 template<typename T>
 int Solver::getSecteurId(const vector<Secteur<T> > &secteurs, T val)
