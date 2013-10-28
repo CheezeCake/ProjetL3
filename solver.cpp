@@ -52,7 +52,7 @@ Solver::Solver(const string &nomFichier)
 
 void Solver::genererPI()
 {
-	int N = villes.size();
+	int N = distances.size();
 	vector<int> parcours(N);
 	int val;
 	int i = 0;
@@ -159,7 +159,6 @@ void Solver::selectionRang()
 	{
 		for(int j = id; j < N-i; j++)
 		{
-			int indice = secteurs[j].indice;
 			secteurs[j].bi = (j == 0) ? 0 : secteurs[j-1].bs+1;
 			secteurs[j].bs = secteurs[j].bi+N-j-i;
 		}
