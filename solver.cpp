@@ -6,6 +6,7 @@
 #include <fstream>
 #include <algorithm>
 #include "solver.hpp"
+#include "rand.hpp"
 #include "config.hpp"
 
 using namespace std;
@@ -56,8 +57,6 @@ void Solver::genererPI()
 	int val;
 	int i = 0;
 
-	srand(time(NULL));
-
 	while(i < taillePI)
 	{
 		vector<int> liste(N-1);
@@ -67,7 +66,7 @@ void Solver::genererPI()
 		parcours[0] = 0;
 		for(int j = 0; j < N-1; j++)
 		{
-			val = rand()%(N-j-1);
+			val = Rand::randi(N-j-1);
 			parcours[j+1] = liste[val];
 			liste.erase(liste.begin()+val);
 		}
@@ -114,8 +113,6 @@ void Solver::selectionRoulette()
 	for(int i = 0; i < N; i++)
 		secteurs[i].indice = i;
 
-	srand(time(NULL));
-
 	double maxDistance = max_element(population.begin(),
 	                                 population.end())->getScore()+DIST_MIN_NN;
 	int id = 0;
@@ -128,7 +125,7 @@ void Solver::selectionRoulette()
 			secteurs[j].bs = secteurs[j].bi+maxDistance-population[indice].getScore();
 		}
 
-		double dRand = (static_cast<double>(rand())/RAND_MAX)*secteurs.back().bs;
+		double dRand = (static_cast<double>(Rand::randi())/RAND_MAX)*secteurs.back().bs;
 		dRand = roundDistance(dRand);
 
 		id = getSecteurId(secteurs, dRand);
@@ -157,8 +154,6 @@ void Solver::selectionRang()
 	for(int i = 0; i < N; i++)
 		secteurs[i].indice = cpop[i].first;
 
-	srand(time(NULL));
-
 	int id = 0;
 	for(int i = 0; i < n; i++)
 	{
@@ -169,7 +164,7 @@ void Solver::selectionRang()
 			secteurs[j].bs = secteurs[j].bi+N-j-i;
 		}
 
-		int iRand = rand()%(secteurs.back().bs+1);
+		int iRand = Rand::randi(secteurs.back().bs+1);
 
 		id = getSecteurId(secteurs, iRand);
 		selection[i] = secteurs[id].indice;
