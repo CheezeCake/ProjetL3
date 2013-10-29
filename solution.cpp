@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "rand.hpp"
 #include "solution.hpp"
 using namespace std;
@@ -19,7 +20,7 @@ double Solution::getScore() const
 	return score;
 }
 
-void Solution::calculerScore(const std::vector<std::vector<double> > &distances)
+void Solution::calculerScore(const vector<vector<double> > &distances)
 {
 	int N = parcours.size();
 
@@ -82,7 +83,7 @@ void Solution::slicingCrossover(const Solution &s, Solution &fils1, Solution &fi
 	fils1.parcours.resize(N);
 	fils2.parcours.resize(N);
 
-	int ptCoupure = Rand::randi(N-1)+1; //1 -> N-1
+	int ptCoupure = Rand::randi(1, N-1);
 	for(int i = 0; i < ptCoupure; i++)
 	{
 		fils1.parcours[i] = parcours[i];
@@ -93,5 +94,47 @@ void Solution::slicingCrossover(const Solution &s, Solution &fils1, Solution &fi
 	{
 		fils1.parcours[i] = s.parcours[i];
 		fils2.parcours[i] = parcours[i];
+	}
+}
+
+void Solution::slicingCrossover(unsigned int k, const Solution &s, Solution &fils1, Solution &fils2) const
+{
+	int N = parcours.size();
+	if(k >= N)
+		return;
+
+	fils1.parcours.resize(N);
+	fils2.parcours.resize(N);
+
+	vector<int> ptsCoupure(N-1);
+	for(int i = 0; i < N-1; i++)
+		ptsCoupure[i] = i+1;
+
+	int (*gen)(int) = Rand::randi;
+	random_shuffle(ptsCoupure.begin(), ptsCoupure.end(), gen);
+	sort(ptsCoupure.begin(), ptsCoupure.begin()+k);
+	ptsCoupure[k] = N;
+
+	int d, p1, p2;
+	for(int i = 0; i <= k; i++)
+	{
+		d = (i == 0) ? 0 : ptsCoupure[i-1];
+
+		for(int j = d; j < ptsCoupure[i]; j++)
+		{
+			p1 = parcours[j];
+			p2 = s.parcours[j];
+
+			if(i%2 == 0)
+			{
+				fils1.parcours[j] = p1;
+				fils2.parcours[j] = p2;
+			}
+			else
+			{
+				fils1.parcours[j] = p2;
+				fils2.parcours[j] = p1;
+			}
+		}
 	}
 }

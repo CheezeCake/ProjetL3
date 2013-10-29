@@ -19,7 +19,7 @@ class Solution
 		bool operator==(const std::vector<int>&) const;
 		bool operator<(const Solution&) const;
 		void slicingCrossover(const Solution&, Solution&, Solution&) const;
-		void slicingCrossover(int, const Solution&, Solution&, Solution&) const;
+		void slicingCrossover(unsigned int, const Solution&, Solution&, Solution&) const;
 };
 
 #endif
