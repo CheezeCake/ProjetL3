@@ -12,7 +12,7 @@ class Rand
 
 	public:
 		static int randi();
-		static int randi(int max);
+		static int randi(int);
 };	
 
 #endif
