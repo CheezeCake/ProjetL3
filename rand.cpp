@@ -24,3 +24,9 @@ int Rand::randi(int max)
 	checkSeed();
 	return (max == 0) ? 0 : rand()%max;
 }
+
+int Rand::randi(int min, int max)
+{
+	checkSeed();
+	return (max == 0) ? 0 : (rand()%(max-min+1))+min;
+}

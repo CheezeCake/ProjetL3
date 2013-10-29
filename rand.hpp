@@ -13,6 +13,7 @@ class Rand
 	public:
 		static int randi();
 		static int randi(int);
+		static int randi(int, int);
 };	
 
 #endif
