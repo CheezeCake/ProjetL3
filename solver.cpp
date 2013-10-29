@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdlib>
-#include <ctime>
 #include <vector>
 #include <cmath>
 #include <fstream>
@@ -54,22 +53,16 @@ void Solver::genererPI()
 {
 	int N = distances.size();
 	vector<int> parcours(N);
-	int val;
 	int i = 0;
 
 	while(i < taillePI)
 	{
-		vector<int> liste(N-1);
-		for(int j = 0; j < N-1; j++)
-			liste[j] = j+1;
-
 		parcours[0] = 0;
-		for(int j = 0; j < N-1; j++)
-		{
-			val = Rand::randi(N-j-1);
-			parcours[j+1] = liste[val];
-			liste.erase(liste.begin()+val);
-		}
+		for(int j = 1; j < N; j++)
+			parcours[j] = j;
+
+		int (*gen)(int) = Rand::randi;
+		random_shuffle(parcours.begin()+1, parcours.end(), gen);
 
 		if(!presente(parcours, i))
 			population[i++] = Solution(parcours, distances);
