@@ -238,6 +238,5 @@ int Solver::getSecteurId(const vector<Secteur<T> > &secteurs, T val)
 
 double Solver::roundDistance(double v)
 {
-	int dixPn = pow(10.0, DECIMALES_DISTANCES);
-	return (floor(v*dixPn+0.5)/dixPn);
+	return (floor(v*DIX_P_DECIMALES+0.5)/DIX_P_DECIMALES);
 }
