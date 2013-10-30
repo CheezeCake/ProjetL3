@@ -130,21 +130,13 @@ void Solver::selectionRang()
 {
 	int N = population.size();
 	int n = N/2;
-
 	selection.resize(n);
 
-	vector<pair<int, Solution> > cpop(N);
-	for(int i = 0; i < N; i++)
-	{
-		cpop[i].first = i;
-		cpop[i].second = population[i];
-	}
-
-	sort(cpop.begin(), cpop.end(), cmp);
+	sort(population.begin(), population.end());
 
 	vector<Secteur<int> > secteurs(N);
 	for(int i = 0; i < N; i++)
-		secteurs[i].indice = cpop[i].first;
+		secteurs[i].indice = i;
 
 	int id = 0;
 	for(int i = 0; i < n; i++)
@@ -248,9 +240,4 @@ double Solver::roundDistance(double v)
 {
 	int dixPn = pow(10.0, DECIMALES_DISTANCES);
 	return (floor(v*dixPn+0.5)/dixPn);
-}
-
-bool Solver::cmp(const pair<int, Solution> &a, const pair<int, Solution> &b)
-{
-	return (a.second < b.second);
 }

@@ -24,7 +24,6 @@ class Solver
 
 		void genererPI();
 		inline bool presente(const std::vector<int>&, int) const;
-		static bool cmp(const std::pair<int, Solution>&, const std::pair<int, Solution>&);
 
 		template<typename T>
 		static int getSecteurId(const std::vector<Secteur<T> >&, T);
