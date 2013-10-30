@@ -33,17 +33,10 @@ void Solution::calculerScore(const vector<vector<double> > &distances)
 
 bool Solution::operator==(const Solution &s) const
 {
-	int N = parcours.size();
-	if(score != s.score || N != s.parcours.size())
+	if(score != s.score)
 		return false;
 
-	for(int i = 0; i < N; i++)
-	{
-		if(parcours[i] != s.parcours[i])
-			return false;
-	}
-
-	return true;
+	return (*this == s.parcours);
 }
 
 void Solution::afficher() const
