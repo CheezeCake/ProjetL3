@@ -57,8 +57,7 @@ void Solver::genererPI()
 
 	while(i < taillePI)
 	{
-		parcours[0] = 0;
-		for(int j = 1; j < N; j++)
+		for(int j = 0; j < N; j++)
 			parcours[j] = j;
 
 		int (*gen)(int) = Rand::randi;
