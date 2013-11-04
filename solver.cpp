@@ -240,3 +240,51 @@ double Solver::roundDistance(double v)
 {
 	return (floor(v*DIX_P_DECIMALES+0.5)/DIX_P_DECIMALES);
 }
+
+bool Solver::presente(const vector<Solution> &V, const Solution &s) const
+{
+	int taille = V.size();
+	for(int i = 0; i < taille; i++)
+	{
+		if(V[i] == s)
+			return true;
+	}
+	return false;
+}
+
+void Solver::reproduction(Solver::Croisement type)
+{
+	int taille = selection.size();
+	int moitie = taille/2;
+	vector<Solution> enfants;
+	Solution temp1, temp2;
+	int k = Rand::randi(2, distances.size()-1);
+
+	for(int i = 0; i < moitie; i += 2)
+	{
+		if(type == SLICING)
+			population[selection[i]].slicingCrossover(population[selection[i+1]], temp1, temp2);
+		else if(type == KSLICING)
+			population[selection[i]].slicingCrossover(k, population[selection[i+1]], temp1, temp2);
+
+		temp1.calculerScore(distances);
+		temp2.calculerScore(distances);
+
+		if(!presente(enfants, temp1))
+			enfants.push_back(temp1);
+		if(!presente(enfants, temp2))
+			enfants.push_back(temp2);
+	}
+	
+	for(int i = moitie; i < taille; i++)
+	{
+		population[selection[i]].mutation(temp1);
+		temp1.calculerScore(distances);
+
+		if(!presente(enfants, temp1))
+			enfants.push_back(temp1);
+	}
+	
+	remplacement(enfants);
+}
+
