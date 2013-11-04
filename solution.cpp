@@ -9,6 +9,12 @@ Solution::Solution()
 	score = 0;
 }
 
+Solution::Solution(const Solution &source)
+{
+	parcours = source.parcours;
+	score = source.score;
+}
+
 Solution::Solution(const vector<int> &parcours, const vector<vector<double> > &distances)
 {
 	this->parcours = parcours;
@@ -52,11 +58,11 @@ void Solution::afficher() const
 
 bool Solution::operator==(const vector<int> &parcours) const
 {
-	int N = this->parcours.size();
+	unsigned int N = this->parcours.size();
 	if(N != parcours.size())
 		return false;
 
-	for(int i = 0; i < N; i++)
+	for(unsigned int i = 0; i < N; i++)
 	{
 		if(this->parcours[i] != parcours[i])
 			return false;
@@ -68,6 +74,17 @@ bool Solution::operator==(const vector<int> &parcours) const
 bool Solution::operator<(const Solution &s) const
 {
 	return (score < s.score);
+}
+
+Solution& Solution::operator=(const Solution &s)
+{
+	if(this != &s)
+	{
+		parcours = s.parcours;
+		score = s.score;
+	}
+
+	return *this;
 }
 
 void Solution::slicingCrossover(const Solution &s, Solution &fils1, Solution &fils2) const
@@ -92,7 +109,7 @@ void Solution::slicingCrossover(const Solution &s, Solution &fils1, Solution &fi
 
 void Solution::slicingCrossover(unsigned int k, const Solution &s, Solution &fils1, Solution &fils2) const
 {
-	int N = parcours.size();
+	unsigned int N = parcours.size();
 	if(k >= N)
 		return;
 
@@ -100,7 +117,7 @@ void Solution::slicingCrossover(unsigned int k, const Solution &s, Solution &fil
 	fils2.parcours.resize(N);
 
 	vector<int> ptsCoupure(N-1);
-	for(int i = 0; i < N-1; i++)
+	for(unsigned int i = 0; i < N-1; i++)
 		ptsCoupure[i] = i+1;
 
 	int (*gen)(int) = Rand::randi;
@@ -109,7 +126,7 @@ void Solution::slicingCrossover(unsigned int k, const Solution &s, Solution &fil
 	ptsCoupure[k] = N;
 
 	int d, p1, p2;
-	for(int i = 0; i <= k; i++)
+	for(unsigned int i = 0; i <= k; i++)
 	{
 		d = (i == 0) ? 0 : ptsCoupure[i-1];
 
@@ -131,3 +148,16 @@ void Solution::slicingCrossover(unsigned int k, const Solution &s, Solution &fil
 		}
 	}
 }
+
+void Solution::mutation(Solution &result) const
+{
+	result = *this;
+	int N = parcours.size();
+	int tirage1 = Rand::randi(1, N);
+	int tirage2 = tirage1;
+	while(tirage1 == tirage2)
+		tirage2 = Rand::randi(1, N);
+	swap(result.parcours[tirage1], result.parcours[tirage2]);
+	//calculer score
+}
+	
