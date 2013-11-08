@@ -301,10 +301,12 @@ void Solver::remplacementStationnaire(const vector<Solution> &enfants)
 {
 	int N = enfants.size();
 	int taille = selection.size();
+	int i = 0;
+	int y = 0;
 
 	while(i < N && y < taille)
 	{
-		if(!presente(population, enfants[i])
+		if(!presente(population, enfants[i]))
 		{
 			population[selection[y]] = enfants[i];
 			y++;
@@ -322,7 +324,7 @@ void Solver::remplacementElitiste(const vector<Solution> &enfants)
 
 	for(int i = 0; i < n; i++)
 	{
-		if(!presente(enfants[i]))
+		if(!presente(population, enfants[i]))
 			population.push_back(enfants[i]);
 	}
 
