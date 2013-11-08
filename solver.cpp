@@ -297,7 +297,21 @@ void Solver::remplacement(const vector<Solution> &enfants)
 		remplacementElitiste(enfants);
 }
 
-void Solver::remplacementStationnaire(const vector<Solution> &enfants){}
+void Solver::remplacementStationnaire(const vector<Solution> &enfants)
+{
+	int N = enfants.size();
+	int taille = selection.size();
+
+	while(i < N && y < taille)
+	{
+		if(!presente(population, enfants[i])
+		{
+			population[selection[y]] = enfants[i];
+			y++;
+		}
+		i++;
+	}	
+}
 
 void Solver::remplacementElitiste(const vector<Solution> &enfants)
 {
