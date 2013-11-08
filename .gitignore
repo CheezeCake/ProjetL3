@@ -1,6 +1,5 @@
 *.o
 *.swp
-a.out
-main.cpp
 *.pl
 ProjetL3
+a.out
