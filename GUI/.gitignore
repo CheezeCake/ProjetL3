@@ -2,3 +2,4 @@ GUI
 GUI.app
 .qmake.cache
 gui.pro.user
+Makefile
