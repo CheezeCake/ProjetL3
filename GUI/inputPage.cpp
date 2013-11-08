@@ -26,7 +26,7 @@ void InputPage::createInputChoicesPage()
 	QLabel *label = new QLabel("Nombre de villes:");
 	nbCities = new QDoubleSpinBox;
 	nbCities->setDecimals(0);
-	nbCities->setMinimum(0);
+    nbCities->setMinimum(3);
 	QPushButton *confirmManualInput = new QPushButton("Valider");
 
 	QHBoxLayout *formManualInput = new QHBoxLayout;
@@ -58,7 +58,7 @@ void InputPage::switchToForm()
 {
 	int n = nbCities->value();
 	if(n == 0)
-		QMessageBox::critical(this, "STOP FUTING !!!", "Ce torche fion il met 0 ville...");
+        QMessageBox::critical(this, "Erreur", "Entrez au moins 3 villes");
 	else
 	{
 		form->createForm(n);

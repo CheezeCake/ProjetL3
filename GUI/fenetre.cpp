@@ -34,9 +34,15 @@ Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 	layoutGV->addWidget(gView, 0, 0);
 	layoutGV->addWidget(nextStep, 1, 0, Qt::AlignRight);
 
+    QPushButton *validate = new QPushButton("Lancer solveur");
+    QObject::connect(validate, SIGNAL(clicked()), this, SLOT(launchSolver()));
+
+    QVBoxLayout *gauche = new QVBoxLayout;
+    gauche->addWidget(tab);
+    gauche->addWidget(validate);
 
 	QHBoxLayout *mainLayout = new QHBoxLayout;
-	mainLayout->addWidget(tab);
+    mainLayout->addLayout(gauche);
 	mainLayout->addLayout(layoutGV);
 
 	setLayout(mainLayout);
@@ -56,19 +62,15 @@ void Fenetre::createPageConfig()
 	layoutConfig->addRow("Taille PI:", sizePI);
 	layoutConfig->addRow("Methode selection:", selectionChoice);
 
-	QPushButton *validate = new QPushButton("Lancer solveur");
-	layoutConfig->addRow(validate);
-
 	pageConfig = new QWidget;
 	pageConfig->setLayout(layoutConfig);
 
-	QObject::connect(validate, SIGNAL(clicked()), this, SLOT(launchSolver()));
 }
 
 void Fenetre::launchSolver()
 {
 	if(pageInput->empty())
-		QMessageBox::critical(this, "STOP FUTING !!!", "Entre des donnees futeur de merde");
+        QMessageBox::critical(this, "Erreur", "Pas de données entrées");
 	/*
 	 * else
 	 *	lancer le bordel
