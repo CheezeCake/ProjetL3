@@ -252,7 +252,7 @@ bool Solver::presente(const vector<Solution> &V, const Solution &s) const
 	return false;
 }
 
-void Solver::reproduction(Solver::Croisement type)
+void Solver::reproduction()
 {
 	int taille = selection.size();
 	int moitie = taille/2;
@@ -262,9 +262,9 @@ void Solver::reproduction(Solver::Croisement type)
 
 	for(int i = 0; i < moitie; i += 2)
 	{
-		if(type == SLICING)
+		if(tCroisement == SLICING)
 			population[selection[i]].slicingCrossover(population[selection[i+1]], temp1, temp2);
-		else if(type == KSLICING)
+		else if(tCroisement == KSLICING)
 			population[selection[i]].slicingCrossover(k, population[selection[i+1]], temp1, temp2);
 
 		temp1.calculerScore(distances);
@@ -288,3 +288,15 @@ void Solver::reproduction(Solver::Croisement type)
 	remplacement(enfants);
 }
 
+void Solver::remplacement(const vector<Solution> &enfants)
+{
+	if(tRemplacement == STATIONNAIRE)
+		remplacementStationnaire(enfants);
+
+	else
+		remplacementElitiste(enfants);
+}
+
+void Solver::remplacementStationnaire(const vector<Solution> &enfants){}
+
+void Solver::remplacementElitiste(const vector<Solution> &enfants){}
