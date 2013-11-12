@@ -10,11 +10,13 @@
 InputPage::InputPage(QWidget *parent) : QWidget(parent)
 {
 	form = new InputForm(this);
+    dist = new InputDist(this);
 	createInputChoicesPage();
 
 	mainLayout = new QStackedLayout;
 	mainLayout->addWidget(inputChoices);
 	mainLayout->addWidget(form);
+    mainLayout->addWidget(dist);
 
 	setLayout(mainLayout);
 }

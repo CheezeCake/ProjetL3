@@ -5,6 +5,7 @@
 #include <QtWidgets/QStackedLayout>
 #include <QtWidgets/QDoubleSpinBox>
 #include "inputForm.hpp"
+#include "inputDist.hpp"
 
 class InputPage : public QWidget
 {
@@ -15,6 +16,7 @@ class InputPage : public QWidget
 		QDoubleSpinBox *nbCities;
 
 		InputForm *form;
+        InputDist *dist;
 
 		QStackedLayout *mainLayout;
 

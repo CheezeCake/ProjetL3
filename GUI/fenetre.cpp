@@ -14,22 +14,26 @@
 
 Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 {
-	createPageConfig();
+    //allocation onglets
+    createPageConfig();
 	pageInput = new InputPage;
+    pageDist = new InputDist;
 
 	QTabWidget *tab = new QTabWidget(this);
 	tab->addTab(pageConfig, "Config solver");
 	tab->addTab(pageInput, "Donnees");
+    tab->addTab(pageDist, "Distances");
 
 	QSizePolicy sp(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
 	tab->setSizePolicy(sp);
 
-	gScene = new QGraphicsScene;
-	//gScene->addText("Arretes de futer !!!");
+    //graphe
+    gScene = new QGraphicsScene;
 	gScene->addLine(5, 10, 90, 150, QPen(QBrush(Qt::SolidPattern), 4));
 	gView = new QGraphicsView(gScene);
 	QPushButton *nextStep = new QPushButton(">>");
 
+    //affichage central
 	QGridLayout *layoutGV = new QGridLayout;
 	layoutGV->addWidget(gView, 0, 0);
 	layoutGV->addWidget(nextStep, 1, 0, Qt::AlignRight);
@@ -37,11 +41,13 @@ Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
     QPushButton *validate = new QPushButton("Lancer solveur");
     QObject::connect(validate, SIGNAL(clicked()), this, SLOT(launchSolver()));
 
+    //partie gauche
     QVBoxLayout *gauche = new QVBoxLayout;
     gauche->addWidget(tab);
     gauche->addWidget(validate);
 
-	QHBoxLayout *mainLayout = new QHBoxLayout;
+    //affichage général
+    QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->addLayout(gauche);
 	mainLayout->addLayout(layoutGV);
 

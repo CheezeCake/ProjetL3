@@ -27,7 +27,7 @@ void InputForm::createForm(int cities)
 	char nameStr[30];
 	QLineEdit *name = NULL;
 
-	deleteForm();
+    deleteForm();
 	layout = new QFormLayout;
 	layout->addRow(cancelButton);
 
