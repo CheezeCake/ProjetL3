@@ -64,6 +64,7 @@ void InputPage::switchToForm()
 	else
 	{
 		form->createForm(n);
+        dist->createForm(n);
 		mainLayout->setCurrentIndex(InputPage::PAGE_FORM);
 	}
 }
