@@ -20,7 +20,7 @@ class InputForm : public QScrollArea
 
 		void createForm(int);
 		void deleteForm();
-	
+
 	signals:
 		void cancel();
 };

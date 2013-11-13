@@ -16,11 +16,11 @@ class InputDist : public QScrollArea
 		QPushButton *cancelButton;
 
 	public:
-        InputDist(QWidget* = 0);
+		InputDist(QWidget* = 0);
 
 		void createForm(int);
 		void deleteForm();
-	
+
 	signals:
 		void cancel();
 };

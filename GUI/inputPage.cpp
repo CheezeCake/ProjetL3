@@ -10,13 +10,13 @@
 InputPage::InputPage(QWidget *parent) : QWidget(parent)
 {
 	form = new InputForm(this);
-    dist = new InputDist(this);
+	dist = new InputDist(this);
 	createInputChoicesPage();
 
 	mainLayout = new QStackedLayout;
 	mainLayout->addWidget(inputChoices);
 	mainLayout->addWidget(form);
-    mainLayout->addWidget(dist);
+	mainLayout->addWidget(dist);
 
 	setLayout(mainLayout);
 }
@@ -28,7 +28,7 @@ void InputPage::createInputChoicesPage()
 	QLabel *label = new QLabel("Nombre de villes:");
 	nbCities = new QDoubleSpinBox;
 	nbCities->setDecimals(0);
-    nbCities->setMinimum(3);
+	nbCities->setMinimum(3);
 	QPushButton *confirmManualInput = new QPushButton("Valider");
 
 	QHBoxLayout *formManualInput = new QHBoxLayout;
@@ -52,19 +52,19 @@ void InputPage::switchPage()
 {
 	int index = mainLayout->currentIndex();
 	mainLayout->setCurrentIndex((index == InputPage::PAGE_CHOICE)
-												? InputPage::PAGE_FORM
-												: InputPage::PAGE_CHOICE);
+			? InputPage::PAGE_FORM
+			: InputPage::PAGE_CHOICE);
 }
 
 void InputPage::switchToForm()
 {
 	int n = nbCities->value();
 	if(n == 0)
-        QMessageBox::critical(this, "Erreur", "Entrez au moins 3 villes");
+		QMessageBox::critical(this, "Erreur", "Entrez au moins 3 villes");
 	else
 	{
 		form->createForm(n);
-        dist->createForm(n);
+		dist->createForm(n);
 		mainLayout->setCurrentIndex(InputPage::PAGE_FORM);
 	}
 }
@@ -82,7 +82,7 @@ bool InputPage::empty()
 
 void InputPage::selectFile()
 {
-	    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "*.txt");
+	QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "*.txt");
 
-		printf("fichier: %s\n", fichier.toStdString().c_str());
+	printf("fichier: %s\n", fichier.toStdString().c_str());
 }

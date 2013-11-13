@@ -16,12 +16,12 @@ class InputPage : public QWidget
 		QDoubleSpinBox *nbCities;
 
 		InputForm *form;
-        InputDist *dist;
+		InputDist *dist;
 
 		QStackedLayout *mainLayout;
 
 		void createInputChoicesPage();
-	
+
 	public:
 		InputPage(QWidget* = 0);
 

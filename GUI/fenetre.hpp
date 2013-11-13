@@ -14,7 +14,7 @@ class Fenetre : public QWidget
 	private:
 		QWidget *pageConfig;
 		InputPage *pageInput;
-        InputDist *pageDist;
+		InputDist *pageDist;
 
 		QGraphicsView *gView;
 		QGraphicsScene *gScene;
@@ -23,7 +23,7 @@ class Fenetre : public QWidget
 
 	public:
 		Fenetre(QWidget* = 0);
-	
+
 	public slots:
 		void launchSolver();
 };
