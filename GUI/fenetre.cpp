@@ -2,11 +2,12 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QComboBox>
-#include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QSizePolicy>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QFileDialog>
 #include "fenetre.hpp"
 
 //pour debug
@@ -24,8 +25,7 @@ Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 	tab->addTab(pageDist, "Distances");
 	tab->addTab(pageName, "Noms");
 
-	QSizePolicy sp(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
-	tab->setSizePolicy(sp);
+	tab->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
 
 	//graphe
 	gScene = new QGraphicsScene;
@@ -59,6 +59,25 @@ Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 
 void Fenetre::createPageConfig()
 {
+	//options chargement des données
+	QPushButton *fileInputButton = new QPushButton("Chargement par fichier");
+	QObject::connect(fileInputButton, SIGNAL(clicked()), this, SLOT(fileInput()));
+	nbCities = new QDoubleSpinBox;
+	nbCities->setDecimals(0);
+	nbCities->setMinimum(3);
+	QPushButton *validateInput = new QPushButton("Valider");
+	QObject::connect(validateInput, SIGNAL(clicked()), this, SLOT(manualInput()));
+
+	QFormLayout *layoutBoxInput = new QFormLayout;
+	layoutBoxInput->addRow(fileInputButton);
+	layoutBoxInput->addRow("Nombre de villes:", nbCities);
+	layoutBoxInput->addRow(validateInput);
+
+	QGroupBox *boxInput = new QGroupBox("Options entrée des données");
+	boxInput->setLayout(layoutBoxInput);
+	boxInput->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
+
+	//options du solver
 	QComboBox *selectionChoice = new QComboBox;
 	QDoubleSpinBox *sizePI = new QDoubleSpinBox;
 	sizePI->setDecimals(0);
@@ -68,9 +87,13 @@ void Fenetre::createPageConfig()
 	layoutConfig->addRow("Taille PI:", sizePI);
 	layoutConfig->addRow("Methode selection:", selectionChoice);
 
-	pageConfig = new QWidget;
-	pageConfig->setLayout(layoutConfig);
+	//layout global
+	QVBoxLayout *layoutPage = new QVBoxLayout;
+	layoutPage->addWidget(boxInput);
+	layoutPage->addLayout(layoutConfig);
 
+	pageConfig = new QWidget;
+	pageConfig->setLayout(layoutPage);
 }
 
 void Fenetre::launchSolver()
@@ -81,4 +104,24 @@ void Fenetre::launchSolver()
 	 * else
 	 *	lancer le bordel
 	 */
+}
+
+void Fenetre::fileInput()
+{
+	QString fileName = QFileDialog::getOpenFileName(this, "Selectionnez un fichier", "", "*.txt");
+	printf("fichier selectionné: '%s'\n", fileName.toStdString().c_str());
+}
+
+void Fenetre::manualInput()
+{
+	if(!pageDist->empty())
+		pageDist->deleteForm();
+
+	if(!pageName->empty())
+		pageName->deleteForm();
+
+	int n = nbCities->value();
+
+	pageDist->createForm(n);
+	pageName->createForm(n);
 }
