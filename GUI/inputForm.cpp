@@ -6,11 +6,8 @@
 InputForm::InputForm(QWidget *parent) : QScrollArea(parent)
 {
 	layout = NULL;
-	cancelButton = new QPushButton("Annuler");
-	widget = new QWidget;
+	global = new QWidget;
 	setAlignment(Qt::AlignHCenter);
-
-	QObject::connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(cancel()));
 }
 
 void InputForm::deleteForm()
@@ -22,22 +19,12 @@ void InputForm::deleteForm()
 	}
 }
 
-void InputForm::createForm(int cities)
+int InputForm::count()
 {
-	char nameStr[30];
-	QLineEdit *name = NULL;
+	return (layout != NULL) ? layout->count() : 0;
+}
 
-	deleteForm();
-	layout = new QFormLayout;
-	layout->addRow(cancelButton);
-
-	for(int i = 0; i < cities; i++)
-	{
-		sprintf(nameStr, "Ville %d:", i+1);
-		name = new QLineEdit();
-		layout->addRow(nameStr, name);
-	}
-
-	widget->setLayout(layout);
-	setWidget(widget);
+bool InputForm::empty()
+{
+	return (layout != NULL) ? layout->isEmpty() : true;
 }

@@ -6,23 +6,26 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
 
+/*
+ * Classe abstraite servant de base
+ * aux formulaires des distances et noms
+ */
+
 class InputForm : public QScrollArea
 {
-	Q_OBJECT
-
-	private:
+	protected:
 		QFormLayout *layout;
-		QWidget *widget;
-		QPushButton *cancelButton;
+		QWidget *global;
 
 	public:
 		InputForm(QWidget* = 0);
 
-		void createForm(int);
-		void deleteForm();
+		virtual void createForm(int) = 0;
+		virtual void resizeForm(int) = 0;
 
-	signals:
-		void cancel();
+		void deleteForm();
+		int count();
+		bool empty();
 };
 
 #endif
