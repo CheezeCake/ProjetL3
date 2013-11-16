@@ -4,8 +4,8 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QGraphicsScene>
 #include <QtWidgets/QGraphicsView>
-#include "inputPage.hpp"
 #include "inputDist.hpp"
+#include "inputName.hpp"
 
 class Fenetre : public QWidget
 {
@@ -13,8 +13,8 @@ class Fenetre : public QWidget
 
 	private:
 		QWidget *pageConfig;
-		InputPage *pageInput;
 		InputDist *pageDist;
+		InputName *pageName;
 
 		QGraphicsView *gView;
 		QGraphicsScene *gScene;

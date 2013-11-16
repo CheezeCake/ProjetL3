@@ -16,13 +16,13 @@ Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 {
 	//allocation onglets
 	createPageConfig();
-	pageInput = new InputPage;
 	pageDist = new InputDist;
+	pageName = new InputName;
 
 	QTabWidget *tab = new QTabWidget(this);
 	tab->addTab(pageConfig, "Config solver");
-	tab->addTab(pageInput, "Donnees");
 	tab->addTab(pageDist, "Distances");
+	tab->addTab(pageName, "Noms");
 
 	QSizePolicy sp(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
 	tab->setSizePolicy(sp);
@@ -75,7 +75,7 @@ void Fenetre::createPageConfig()
 
 void Fenetre::launchSolver()
 {
-	if(pageInput->empty())
+	if(pageDist->empty())
 		QMessageBox::critical(this, "Erreur", "Pas de données entrées");
 	/*
 	 * else
