@@ -4,23 +4,12 @@
 #include <cstdio>
 #include "inputDist.hpp"
 
-InputDist::InputDist(QWidget *parent) : QScrollArea(parent)
-{
-	layout = NULL;
-	cancelButton = new QPushButton("Annuler");
-	widget = new QWidget;
-	setAlignment(Qt::AlignHCenter);
+InputDist::InputDist(QWidget *parent) : InputForm(parent)
+{}
 
-	QObject::connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(cancel()));
-}
-
-void InputDist::deleteForm()
+void InputDist::resizeForm(int cities)
 {
-	if(layout != NULL)
-	{
-		delete layout;
-		layout = NULL;
-	}
+	createForm(cities);
 }
 
 void InputDist::createForm(int cities)
@@ -30,29 +19,28 @@ void InputDist::createForm(int cities)
 	QDoubleSpinBox *dist;
 
 	deleteForm();
+
 	layout = new QFormLayout;
-	layout->addRow(cancelButton);
 
 	for(int i = 0; i < cities; i++)
 	{
-		for(int j = 0; j < cities; j++)
+		for(int j = i+1; j < cities; j++)
 		{
-			if(i != j)
-			{
-				sprintf(nameV1, "Ville %d", i+1);
-				sprintf(nameV2, "Ville %d", j+1);
-				QLabel *V1 = new QLabel(nameV1);
-				dist = new QDoubleSpinBox();
-				QLabel *V2 = new QLabel(nameV2);
-				QHBoxLayout *ligne = new QHBoxLayout;
-				ligne->addWidget(V1);
-				ligne->addWidget(dist);
-				ligne->addWidget(V2);
-				layout->addRow(ligne);
-			}
+			sprintf(nameV1, "Ville %d", i+1);
+			sprintf(nameV2, "Ville %d", j+1);
+
+			QLabel *V1 = new QLabel(nameV1);
+			QLabel *V2 = new QLabel(nameV2);
+			dist = new QDoubleSpinBox();
+
+			QHBoxLayout *ligne = new QHBoxLayout;
+			ligne->addWidget(V1);
+			ligne->addWidget(dist);
+			ligne->addWidget(V2);
+			layout->addRow(ligne);
 		}
 	}
 
-	widget->setLayout(layout);
-	setWidget(widget);
+	global->setLayout(layout);
+	setWidget(global);
 }

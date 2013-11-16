@@ -5,24 +5,15 @@
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
+#include "inputForm.hpp"
 
-class InputDist : public QScrollArea
+class InputDist : public InputForm
 {
-	Q_OBJECT
-
-	private:
-		QFormLayout *layout;
-		QWidget *widget;
-		QPushButton *cancelButton;
-
 	public:
 		InputDist(QWidget* = 0);
 
 		void createForm(int);
-		void deleteForm();
-
-	signals:
-		void cancel();
+		void resizeForm(int);
 };
 
 #endif
