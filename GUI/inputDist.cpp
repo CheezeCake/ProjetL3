@@ -41,6 +41,7 @@ void InputDist::createForm(int cities)
 		}
 	}
 
+	global = new QWidget;
 	global->setLayout(layout);
 	setWidget(global);
 }

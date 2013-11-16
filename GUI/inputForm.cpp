@@ -6,25 +6,25 @@
 InputForm::InputForm(QWidget *parent) : QScrollArea(parent)
 {
 	layout = NULL;
-	global = new QWidget;
+	global = NULL;
 	setAlignment(Qt::AlignHCenter);
 }
 
 void InputForm::deleteForm()
 {
-	if(layout != NULL)
+	if(global != NULL)
 	{
-		delete layout;
-		layout = NULL;
+		delete global;
+		global = NULL;
 	}
 }
 
 int InputForm::count()
 {
-	return (layout != NULL) ? layout->count() : 0;
+	return (global != NULL) ? layout->count() : 0;
 }
 
 bool InputForm::empty()
 {
-	return (layout != NULL) ? layout->isEmpty() : true;
+	return (global != NULL) ? layout->isEmpty() : true;
 }

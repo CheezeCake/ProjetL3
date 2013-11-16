@@ -29,6 +29,7 @@ void InputName::createForm(int cities)
 	for(int i = 0; i < cities; i++)
 		addRow(i+1);
 
+	global = new QWidget;
 	global->setLayout(layout);
 	setWidget(global);
 }
