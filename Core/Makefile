@@ -1,16 +1,16 @@
 CXX=c++
+AR=ar
 CXXFLAGS=-O2 -Wall
 SRC=$(wildcard *.cpp)
 OBJ=$(SRC:.cpp=.o)
-TARGET=ProjetL3
+LIB_DIR=lib/
+TARGET=$(LIB_DIR)libsolver.a
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CXX) $^ -o $@
-
-main.o: main.cpp
-	$(CXX) -c $^ $(CXXFLAGS)
+	@mkdir -p $(LIB_DIR)
+	@$(AR) rv $@ $^
 
 %.o: %.cpp %.hpp
 	$(CXX) -c $< $(CXXFLAGS)
