@@ -5,23 +5,6 @@
 InputName::InputName(QWidget *parent) : InputForm(parent)
 {}
 
-void InputName::resizeForm(int cities)
-{
-	int n = count();
-
-	if(cities > n)
-	{
-		for(int i = n; i <= cities; i++)
-			addRow(i);
-	}
-	else
-	{
-		// *2 car il faut delete label+lineEdit
-		for(int i = n-1; i > cities*2; i--)
-			layout->removeItem(layout->itemAt(i));
-	}
-}
-
 void InputName::createForm(int cities)
 {
 	deleteForm();
@@ -51,10 +34,16 @@ void InputName::addRow(int i)
 
 bool InputName::full()
 {
+	return !(empty());
+}
+
+void InputName::fillEmptyNames()
+{
 	if(empty())
-		return false;
+		return;
 
 	QLineEdit *name = NULL;
+	char nameStr[30];
 	int n = count();
 
 	for(int i = 1; i < n; i += 2)
@@ -62,8 +51,9 @@ bool InputName::full()
 		name = static_cast<QLineEdit*>(layout->itemAt(i)->widget());
 
 		if(name->text().isEmpty())
-			return true;
+		{
+			sprintf(nameStr, "Ville %d", (i/2)+1);
+			name->setText(nameStr);
+		}
 	}
-
-	return false;
 }
