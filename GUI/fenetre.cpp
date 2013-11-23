@@ -10,9 +10,6 @@
 #include <QtWidgets/QFileDialog>
 #include "fenetre.hpp"
 
-//pour debug
-#include <cstdio>
-
 Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 {
 	//allocation onglets
@@ -101,6 +98,8 @@ void Fenetre::launchSolver()
 {
 	if(!pageDist->full())
 	   QMessageBox::critical(this, "Erreur", "Pas de données entrées");
+	else
+		pageName->fillEmptyNames();
 }
 
 void Fenetre::fileInput()
@@ -111,12 +110,6 @@ void Fenetre::fileInput()
 
 void Fenetre::manualInput()
 {
-	if(!pageDist->empty())
-		pageDist->deleteForm();
-
-	if(!pageName->empty())
-		pageName->deleteForm();
-
 	int n = nbCities->value();
 
 	pageDist->createForm(n);

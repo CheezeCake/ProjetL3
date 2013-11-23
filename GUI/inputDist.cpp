@@ -7,11 +7,6 @@
 InputDist::InputDist(QWidget *parent) : InputForm(parent)
 {}
 
-void InputDist::resizeForm(int cities)
-{
-	createForm(cities);
-}
-
 void InputDist::createForm(int cities)
 {
 	char nameV1[30];

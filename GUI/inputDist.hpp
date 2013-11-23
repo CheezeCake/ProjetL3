@@ -13,7 +13,6 @@ class InputDist : public InputForm
 		InputDist(QWidget* = 0);
 
 		virtual void createForm(int);
-		virtual void resizeForm(int);
 		virtual bool full();
 };
 

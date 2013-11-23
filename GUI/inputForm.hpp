@@ -21,7 +21,6 @@ class InputForm : public QScrollArea
 		InputForm(QWidget* = 0);
 
 		virtual void createForm(int) = 0;
-		virtual void resizeForm(int) = 0;
 		virtual void deleteForm();
 		virtual int count();
 		virtual bool empty();

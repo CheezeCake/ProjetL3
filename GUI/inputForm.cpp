@@ -1,6 +1,5 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QDoubleSpinBox>
-#include <cstdio>
 #include "inputForm.hpp"
 
 InputForm::InputForm(QWidget *parent) : QScrollArea(parent)
