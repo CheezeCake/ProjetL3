@@ -22,10 +22,10 @@ class InputForm : public QScrollArea
 
 		virtual void createForm(int) = 0;
 		virtual void resizeForm(int) = 0;
-
-		void deleteForm();
-		int count();
-		bool empty();
+		virtual void deleteForm();
+		virtual int count();
+		virtual bool empty();
+		virtual bool full();
 };
 
 #endif

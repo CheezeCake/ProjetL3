@@ -45,3 +45,22 @@ void InputDist::createForm(int cities)
 	global->setLayout(layout);
 	setWidget(global);
 }
+
+bool InputDist::full()
+{
+	if(empty())
+		return false;
+
+	QDoubleSpinBox *spinbox = NULL;
+	int n = count();
+
+	for(int i = 0; i < n; i++)
+	{
+		spinbox = static_cast<QDoubleSpinBox*>(layout->itemAt(i)->layout()->itemAt(1)->widget());
+
+		if(spinbox->value() == 0.0)
+			return false;
+	}
+
+	return true;
+}

@@ -28,3 +28,8 @@ bool InputForm::empty()
 {
 	return (global != NULL) ? layout->isEmpty() : true;
 }
+
+bool InputForm::full()
+{
+	return !(empty());
+}

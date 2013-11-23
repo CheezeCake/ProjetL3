@@ -62,6 +62,7 @@ void Fenetre::createPageConfig()
 	//options chargement des données
 	QPushButton *fileInputButton = new QPushButton("Chargement par fichier");
 	QObject::connect(fileInputButton, SIGNAL(clicked()), this, SLOT(fileInput()));
+
 	nbCities = new QDoubleSpinBox;
 	nbCities->setDecimals(0);
 	nbCities->setMinimum(3);
@@ -98,12 +99,8 @@ void Fenetre::createPageConfig()
 
 void Fenetre::launchSolver()
 {
-	if(pageDist->empty())
-		QMessageBox::critical(this, "Erreur", "Pas de données entrées");
-	/*
-	 * else
-	 *	lancer le bordel
-	 */
+	if(!pageDist->full())
+	   QMessageBox::critical(this, "Erreur", "Pas de données entrées");
 }
 
 void Fenetre::fileInput()

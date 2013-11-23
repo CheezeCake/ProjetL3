@@ -15,8 +15,9 @@ class InputName : public InputForm
 	public:
 		InputName(QWidget* = 0);
 
-		void createForm(int);
-		void resizeForm(int);
+		virtual void createForm(int);
+		virtual void resizeForm(int);
+		virtual bool full();
 };
 
 #endif

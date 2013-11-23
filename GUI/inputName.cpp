@@ -16,7 +16,8 @@ void InputName::resizeForm(int cities)
 	}
 	else
 	{
-		for(int i = n-1; i > cities; i--)
+		// *2 car il faut delete label+lineEdit
+		for(int i = n-1; i > cities*2; i--)
 			layout->removeItem(layout->itemAt(i));
 	}
 }
@@ -43,6 +44,26 @@ void InputName::addRow(int i)
 	sprintf(label, "Ville %d", i);
 	nameLabel = new QLabel(label);
 	name = new QLineEdit();
+	name->setObjectName("champs");
 
 	layout->addRow(nameLabel, name);
+}
+
+bool InputName::full()
+{
+	if(empty())
+		return false;
+
+	QLineEdit *name = NULL;
+	int n = count();
+
+	for(int i = 1; i < n; i += 2)
+	{
+		name = static_cast<QLineEdit*>(layout->itemAt(i)->widget());
+
+		if(name->text().isEmpty())
+			return true;
+	}
+
+	return false;
 }
