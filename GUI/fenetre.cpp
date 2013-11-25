@@ -1,7 +1,5 @@
-#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QFormLayout>
-#include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QSizePolicy>
@@ -17,7 +15,7 @@ Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 	pageDist = new InputDist;
 	pageName = new InputName;
 
-	QTabWidget *tab = new QTabWidget(this);
+	tab = new QTabWidget(this);
 	tab->addTab(pageConfig, "Config solver");
 	tab->addTab(pageDist, "Distances");
 	tab->addTab(pageName, "Noms");
@@ -52,6 +50,8 @@ Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 
 	QSize sizeTab = tab->size();
 	resize(sizeTab.width()*8, sizeTab.height()*15);
+
+	QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(handleTabChanges(int)));
 }
 
 void Fenetre::createPageConfig()
@@ -75,20 +75,45 @@ void Fenetre::createPageConfig()
 	boxInput->setLayout(layoutBoxInput);
 	boxInput->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
 
-	//options du solver
-	QComboBox *selectionChoice = new QComboBox;
-	QDoubleSpinBox *sizePI = new QDoubleSpinBox;
+
+	//options selection, ajoutés dans l'ordre de
+	//l'enum Selection (solver.hpp)
+	selectSelection = new QComboBox;
+	selectSelection->addItem("Roulette");
+	selectSelection->addItem("Rang");
+	selectSelection->addItem("Tournoi");
+	selectSelection->addItem("Elitisme");
+
+	//options croisement, aoutés dans l'ordre de
+	//l'enum Croisement (solver.hpp)
+	selectCroisement = new QComboBox;
+	selectCroisement->addItem("Slicing crossover");
+	selectCroisement->addItem("K-slicing crossover");
+
+	//options remplacement, ajoutés dans l'ordre de
+	//l'enum Remplacement (solver.hpp)
+	selectRemplacement = new QComboBox;
+	selectRemplacement->addItem("Stationnaire");
+	selectRemplacement->addItem("Elitiste");
+
+	//selection taille population initiale
+	sizePI = new QDoubleSpinBox;
 	sizePI->setDecimals(0);
 	sizePI->setMinimum(0);
 
 	QFormLayout *layoutConfig = new QFormLayout;
 	layoutConfig->addRow("Taille PI:", sizePI);
-	layoutConfig->addRow("Methode selection:", selectionChoice);
+	layoutConfig->addRow("Selection:", selectSelection);
+	layoutConfig->addRow("Croisement:", selectCroisement);
+	layoutConfig->addRow("Remplacement:", selectRemplacement);
+
+	QGroupBox *boxConfig = new QGroupBox("Options solver");
+	boxConfig->setLayout(layoutConfig);
 
 	//layout global
 	QVBoxLayout *layoutPage = new QVBoxLayout;
 	layoutPage->addWidget(boxInput);
-	layoutPage->addLayout(layoutConfig);
+	layoutPage->addWidget(boxConfig);
 
 	pageConfig = new QWidget;
 	pageConfig->setLayout(layoutPage);
@@ -114,4 +139,18 @@ void Fenetre::manualInput()
 
 	pageDist->createForm(n);
 	pageName->createForm(n);
+}
+
+void Fenetre::handleTabChanges(int index)
+{
+	//tentative d'acces aux onglets des distances et
+	//nom de villes sans avoir selectionné une methode
+	//d'entrée
+	if((index == 1 || index == 2) && pageDist->empty())
+	{
+		tab->setCurrentIndex(0);
+		QMessageBox::information(this, "Attention",
+				"Pas de methode d'entrée sélectionnée.\n\n"
+				"Sélectionnez l'entrée par fichier ou l'entrée manuelle en entrant un nombre de villes dans l'onglet Config solver");
+	}
 }
