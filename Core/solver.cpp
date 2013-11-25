@@ -66,6 +66,7 @@ void Solver::genererPI()
 		if(!presente(parcours, i))
 			population[i++] = Solution(parcours, distances);
 	}
+	moyennePrec = fitnessMoyen();
 }
 
 void Solver::afficher() const
@@ -295,6 +296,7 @@ void Solver::remplacement(const vector<Solution> &enfants)
 
 	else
 		remplacementElitiste(enfants);
+	moyennePrec = fitnessMoyen();
 }
 
 void Solver::remplacementStationnaire(const vector<Solution> &enfants)
@@ -330,4 +332,51 @@ void Solver::remplacementElitiste(const vector<Solution> &enfants)
 
 	sort(population.begin(), population.end());
 	population.resize(N);
+}
+
+double Solver::fitnessMoyen()
+{
+	int temp = 0;
+	int taille = population.size();
+	for(int i = 0; i < taille; i++)
+		temp += population[i].getScore();
+	return (temp/taille);
+}
+
+void Solver::iteration()
+{
+	if(tSelection == ROULETTE)
+		selectionRoulette();
+
+	else if(tSelection == RANG)
+		selectionRang();
+
+	else if(tSelection == TOURNOI)
+		selectionTournoi();
+
+	else
+		selectionElitisme();
+
+	reproduction();
+
+	moyennePrec = fitnessMoyen();
+}
+
+void Solver::resoudre()
+{
+	double temp = moyennePrec;
+	bool ok = true;
+	int min = 5;
+	int i = 0;
+
+	while(ok || i < min)
+	{
+		iteration();
+		temp *= 1.1;
+		if(temp > moyennePrec)
+			ok = false;
+		else
+			temp = moyennePrec;
+		i++;
+	}
 }

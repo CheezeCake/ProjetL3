@@ -43,6 +43,7 @@ class Solver
 		Croisement tCroisement;
 		Selection tSelection;
 		Remplacement tRemplacement;
+		double moyennePrec;
 
 		void genererPI();
 		inline bool presente(const std::vector<int>&, int) const;
@@ -53,6 +54,10 @@ class Solver
 
 		void remplacementStationnaire(const std::vector<Solution>&);
 		void remplacementElitiste(const std::vector<Solution>&);
+
+		double fitnessMoyen();
+		void iteration();
+		void resoudre();
 };
 
 #endif
