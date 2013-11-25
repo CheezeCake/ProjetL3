@@ -5,6 +5,7 @@
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
+#include <vector>
 #include "inputForm.hpp"
 
 class InputName : public InputForm
@@ -19,6 +20,7 @@ class InputName : public InputForm
 		virtual bool full();
 
 		void fillEmptyNames();
+		void getNames(std::vector<std::string>&);
 };
 
 #endif

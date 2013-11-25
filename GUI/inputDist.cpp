@@ -10,8 +10,8 @@ InputDist::InputDist(QWidget *parent) : InputForm(parent)
 void InputDist::createForm(int cities)
 {
 	char nameV1[30];
-	char nameV2[30];
-	QDoubleSpinBox *dist;
+	QDoubleSpinBox *x = NULL;
+	QDoubleSpinBox *y = NULL;
 
 	deleteForm();
 
@@ -19,21 +19,17 @@ void InputDist::createForm(int cities)
 
 	for(int i = 0; i < cities; i++)
 	{
-		for(int j = i+1; j < cities; j++)
-		{
-			sprintf(nameV1, "Ville %d", i+1);
-			sprintf(nameV2, "Ville %d", j+1);
+		sprintf(nameV1, "Ville %d", i+1);
 
-			QLabel *V1 = new QLabel(nameV1);
-			QLabel *V2 = new QLabel(nameV2);
-			dist = new QDoubleSpinBox();
+		QLabel *V = new QLabel(nameV1);
+		x = new QDoubleSpinBox;
+		y = new QDoubleSpinBox;
 
-			QHBoxLayout *ligne = new QHBoxLayout;
-			ligne->addWidget(V1);
-			ligne->addWidget(dist);
-			ligne->addWidget(V2);
-			layout->addRow(ligne);
-		}
+		QHBoxLayout *ligne = new QHBoxLayout;
+		ligne->addWidget(V);
+		ligne->addWidget(x);
+		ligne->addWidget(y);
+		layout->addRow(ligne);
 	}
 
 	global = new QWidget;
@@ -47,11 +43,13 @@ bool InputDist::full()
 		return false;
 
 	QDoubleSpinBox *spinbox = NULL;
+	QDoubleSpinBox *spinbox1 = NULL;
 	int n = count();
 
 	for(int i = 0; i < n; i++)
 	{
 		spinbox = static_cast<QDoubleSpinBox*>(layout->itemAt(i)->layout()->itemAt(1)->widget());
+		spinbox1 = static_cast<QDoubleSpinBox*>(layout->itemAt(i)->layout()->itemAt(2)->widget());
 
 		if(spinbox->value() == 0.0)
 			return false;

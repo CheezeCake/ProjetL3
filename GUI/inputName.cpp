@@ -2,6 +2,8 @@
 #include <QtWidgets/QLabel>
 #include "inputName.hpp"
 
+using namespace std;
+
 InputName::InputName(QWidget *parent) : InputForm(parent)
 {}
 
@@ -55,5 +57,19 @@ void InputName::fillEmptyNames()
 			sprintf(nameStr, "Ville %d", (i/2)+1);
 			name->setText(nameStr);
 		}
+	}
+}
+
+void InputName::getNames(vector<string> &villes)
+{
+	int n = count();
+	QLineEdit *name = NULL;
+	villes.resize(n);
+	int j = 0;
+
+	for(int i = 1; i < n; i += 2)
+	{
+		name = static_cast<QLineEdit*>(layout->itemAt(i)->widget());
+		villes[j++] = name->text().toStdString();
 	}
 }
