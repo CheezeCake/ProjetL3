@@ -16,14 +16,14 @@ struct Secteur
 class Solver
 {
 	public:
-		Solver(const std::vector<std::string>&, const std::vector<std::vector<double> >&, int);
-		Solver(const std::string&);
-
 		enum Croisement { SLICING, KSLICING };
 		enum Selection { ROULETTE, RANG, TOURNOI, ELITISME };
 		enum Remplacement { STATIONNAIRE, ELITISTE };
 
-		void afficher() const;
+		Solver(const std::vector<std::string>&, const std::vector<std::vector<double> >&, int, Selection, Croisement, Remplacement);
+		Solver(const std::string&);
+
+		void afficher();
 		void afficherSelection() const;
 		void selectionRoulette();
 		void selectionRang();
@@ -33,6 +33,10 @@ class Solver
 		void remplacement(const std::vector<Solution>&);
 
 		static inline double roundDistance(double);
+
+		void resoudre();
+		
+		int meilleureSol();
 
 	private:
 		std::vector<std::string> villes;
@@ -57,7 +61,6 @@ class Solver
 
 		double fitnessMoyen();
 		void iteration();
-		void resoudre();
 };
 
 #endif

@@ -153,10 +153,10 @@ void Solution::mutation(Solution &result) const
 {
 	result = *this;
 	int N = parcours.size();
-	int tirage1 = Rand::randi(1, N);
+	int tirage1 = Rand::randi(1, N-1);
 	int tirage2 = tirage1;
 	while(tirage1 == tirage2)
-		tirage2 = Rand::randi(1, N);
+		tirage2 = Rand::randi(1, N-1);
 	swap(result.parcours[tirage1], result.parcours[tirage2]);
 	//calculer score
 }

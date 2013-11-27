@@ -10,13 +10,16 @@
 
 using namespace std;
 
-Solver::Solver(const vector<string> &villes, const vector<vector<double> > &distances, int taillePI)
+Solver::Solver(const vector<string> &villes, const vector<vector<double> > &distances, int taillePI, Selection selec, Croisement crois, Remplacement remp)
 {
 	this->taillePI = taillePI;
 	this->villes = villes;
 	this->distances = distances;
 
 	population.resize(taillePI);
+	tSelection = selec;
+	tCroisement = crois;
+	tRemplacement = remp;
 	genererPI();
 }
 
@@ -69,10 +72,12 @@ void Solver::genererPI()
 	moyennePrec = fitnessMoyen();
 }
 
-void Solver::afficher() const
+void Solver::afficher()
 {
 	for(int i = 0; i < taillePI; i++)
 		population[i].afficher();
+	cout << endl << "----Meilleure solution----" << endl;
+	population[meilleureSol()].afficher();
 }
 
 void Solver::afficherSelection() const
@@ -267,7 +272,7 @@ void Solver::reproduction()
 			population[selection[i]].slicingCrossover(population[selection[i+1]], temp1, temp2);
 		else if(tCroisement == KSLICING)
 			population[selection[i]].slicingCrossover(k, population[selection[i+1]], temp1, temp2);
-
+		
 		temp1.calculerScore(distances);
 		temp2.calculerScore(distances);
 
@@ -285,7 +290,6 @@ void Solver::reproduction()
 		if(!presente(enfants, temp1))
 			enfants.push_back(temp1);
 	}
-	
 	remplacement(enfants);
 }
 
@@ -359,6 +363,7 @@ void Solver::iteration()
 
 	reproduction();
 
+
 	moyennePrec = fitnessMoyen();
 }
 
@@ -379,4 +384,22 @@ void Solver::resoudre()
 			temp = moyennePrec;
 		i++;
 	}
+}
+
+int Solver::meilleureSol()
+{
+	int N = population.size();
+	double min = population[0].getScore();
+	int meilleure = 0;
+	double temp;
+	for(int i = 1; i < N; i++)
+	{
+		temp = population[i].getScore();
+		if(temp < min)
+		{
+			min = temp;
+			meilleure = i;
+		}
+	}
+	return meilleure;
 }
