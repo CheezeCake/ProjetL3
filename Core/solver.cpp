@@ -20,7 +20,9 @@ Solver::Solver(const vector<string> &villes, const vector<vector<double> > &dist
 	tSelection = selec;
 	tCroisement = crois;
 	tRemplacement = remp;
+
 	genererPI();
+	moyennePrec = fitnessMoyen();
 }
 
 Solver::Solver(const string &nomFichier)
@@ -69,7 +71,6 @@ void Solver::genererPI()
 		if(!presente(parcours, i))
 			population[i++] = Solution(parcours, distances);
 	}
-	moyennePrec = fitnessMoyen();
 }
 
 void Solver::afficher()
@@ -297,10 +298,8 @@ void Solver::remplacement(const vector<Solution> &enfants)
 {
 	if(tRemplacement == STATIONNAIRE)
 		remplacementStationnaire(enfants);
-
 	else
 		remplacementElitiste(enfants);
-	moyennePrec = fitnessMoyen();
 }
 
 void Solver::remplacementStationnaire(const vector<Solution> &enfants)
@@ -362,23 +361,22 @@ void Solver::iteration()
 		selectionElitisme();
 
 	reproduction();
-
-
-	moyennePrec = fitnessMoyen();
 }
 
 void Solver::resoudre()
 {
 	double temp = moyennePrec;
 	bool ok = true;
-	int min = 5;
+	const int min = 5;
 	int i = 0;
 
 	while(ok || i < min)
 	{
 		iteration();
-		temp *= 1.1;
-		if(temp > moyennePrec)
+		moyennePrec = fitnessMoyen();
+		temp *= 0.9;
+
+		if(temp < moyennePrec)
 			ok = false;
 		else
 			temp = moyennePrec;
