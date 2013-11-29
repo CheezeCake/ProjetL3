@@ -265,7 +265,9 @@ void Solver::reproduction()
 	int moitie = taille/2;
 	vector<Solution> enfants;
 	Solution temp1, temp2;
-	int k = Rand::randi(2, distances.size()-1);
+	int k = Rand::randi(1, distances.size()-1);
+
+	enfants.reserve(taille);
 
 	for(int i = 0; i < moitie; i += 2)
 	{
@@ -291,6 +293,7 @@ void Solver::reproduction()
 		if(!presente(enfants, temp1))
 			enfants.push_back(temp1);
 	}
+
 	remplacement(enfants);
 }
 
