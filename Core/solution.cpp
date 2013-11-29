@@ -122,20 +122,20 @@ void Solution::slicingCrossover(unsigned int k, const Solution &s, Solution &fil
 
 	int (*gen)(int) = Rand::randi;
 	random_shuffle(ptsCoupure.begin()+1, ptsCoupure.end()-1, gen);
-	sort(ptsCoupure.begin()+1, ptsCoupure.begin()+k);
+	sort(ptsCoupure.begin()+1, ptsCoupure.begin()+k+1);
 	ptsCoupure[k+1] = N;
 
 	int d, p1, p2;
 	for(unsigned int i = 0; i <= k; i++)
 	{
-		d = ptsCoupure[i-1];
+		d = ptsCoupure[i];
 
-		for(int j = d; j < ptsCoupure[i]; j++)
+		for(int j = d; j < ptsCoupure[i+1]; j++)
 		{
 			p1 = parcours[j];
 			p2 = s.parcours[j];
 
-			if(i%2 == 0)
+			if((i+1)%2 == 0)
 			{
 				fils1.parcours[j] = p1;
 				fils2.parcours[j] = p2;
