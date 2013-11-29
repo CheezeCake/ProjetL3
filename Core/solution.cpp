@@ -116,19 +116,19 @@ void Solution::slicingCrossover(unsigned int k, const Solution &s, Solution &fil
 	fils1.parcours.resize(N);
 	fils2.parcours.resize(N);
 
-	vector<int> ptsCoupure(N-1);
-	for(unsigned int i = 0; i < N-1; i++)
-		ptsCoupure[i] = i+1;
+	vector<int> ptsCoupure(N+1);
+	for(unsigned int i = 0; i < N; i++)
+		ptsCoupure[i] = i;
 
 	int (*gen)(int) = Rand::randi;
-	random_shuffle(ptsCoupure.begin(), ptsCoupure.end(), gen);
-	sort(ptsCoupure.begin(), ptsCoupure.begin()+k);
-	ptsCoupure[k] = N;
+	random_shuffle(ptsCoupure.begin()+1, ptsCoupure.end()-1, gen);
+	sort(ptsCoupure.begin()+1, ptsCoupure.begin()+k);
+	ptsCoupure[k+1] = N;
 
 	int d, p1, p2;
 	for(unsigned int i = 0; i <= k; i++)
 	{
-		d = (i == 0) ? 0 : ptsCoupure[i-1];
+		d = ptsCoupure[i-1];
 
 		for(int j = d; j < ptsCoupure[i]; j++)
 		{
