@@ -1,6 +1,8 @@
 #ifndef FENETRE_HPP
 #define FENETRE_HPP
 
+#include <vector>
+#include <pair>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QDoubleSpinBox>
@@ -9,6 +11,7 @@
 #include <QtWidgets/QGraphicsView>
 #include "inputDist.hpp"
 #include "inputName.hpp"
+#include "solver.hpp"
 
 class Fenetre : public QWidget
 {
@@ -23,6 +26,7 @@ class Fenetre : public QWidget
 
 		//input
 		QDoubleSpinBox *nbCities;
+		QDoubleSpinBox *nbCitiesGen;
 
 		//solver
 		QDoubleSpinBox *sizePI;
@@ -32,6 +36,10 @@ class Fenetre : public QWidget
 
 		QGraphicsView *gView;
 		QGraphicsScene *gScene;
+
+		Solver *sol;
+		int taillePI;
+		std::vector<pair<int> > coord;
 
 		void createPageConfig();
 

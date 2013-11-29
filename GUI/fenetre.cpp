@@ -6,10 +6,14 @@
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QFileDialog>
+#include <QtWidgets/QLabel>
 #include "fenetre.hpp"
 
 Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 {
+	sol = NULL;
+	taillePI = 0;
+
 	//allocation onglets
 	createPageConfig();
 	pageDist = new InputDist;
@@ -49,17 +53,40 @@ Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 	setLayout(mainLayout);
 
 	QSize sizeTab = tab->size();
-	resize(sizeTab.width()*8, sizeTab.height()*15);
+	resize(sizeTab.width()*10, sizeTab.height()*15);
 
 	QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(handleTabChanges(int)));
 }
 
 void Fenetre::createPageConfig()
 {
+	//generer un probleme
+	QLabel *labelGen = new QLabel("Générer un problème");
+	labelGen->setAlignment(Qt::AlignHCenter);
+	nbCitiesGen = new QDoubleSpinBox;
+	nbCitiesGen->setDecimals(0);
+	nbCitiesGen->setMinimum(3);
+	QPushButton *generationButton = new QPushButton("Générer");
+
+	//separateur
+	QFrame *line = new QFrame;
+	line->setFrameShape(QFrame::HLine);
+	line->setFrameShadow(QFrame::Sunken);
+
 	//options chargement des données
-	QPushButton *fileInputButton = new QPushButton("Chargement par fichier");
+	QLabel *labelFile = new QLabel("Chargement par fichier");
+	labelFile->setAlignment(Qt::AlignHCenter);
+	QPushButton *fileInputButton = new QPushButton("Charger");
 	QObject::connect(fileInputButton, SIGNAL(clicked()), this, SLOT(fileInput()));
 
+	//separateur
+	QFrame *line1 = new QFrame;
+	line1->setFrameShape(QFrame::HLine);
+	line1->setFrameShadow(QFrame::Sunken);
+
+
+	QLabel *labelManualInput = new QLabel("Entrée manuelle");
+	labelManualInput->setAlignment(Qt::AlignHCenter);
 	nbCities = new QDoubleSpinBox;
 	nbCities->setDecimals(0);
 	nbCities->setMinimum(3);
@@ -67,7 +94,14 @@ void Fenetre::createPageConfig()
 	QObject::connect(validateInput, SIGNAL(clicked()), this, SLOT(manualInput()));
 
 	QFormLayout *layoutBoxInput = new QFormLayout;
+	layoutBoxInput->addRow(labelGen);
+	layoutBoxInput->addRow("Nombre de villes:", nbCitiesGen);
+	layoutBoxInput->addRow(generationButton);
+	layoutBoxInput->addRow(line1);
+	layoutBoxInput->addRow(labelFile);
 	layoutBoxInput->addRow(fileInputButton);
+	layoutBoxInput->addRow(line);
+	layoutBoxInput->addRow(labelManualInput);
 	layoutBoxInput->addRow("Nombre de villes:", nbCities);
 	layoutBoxInput->addRow(validateInput);
 
@@ -122,15 +156,21 @@ void Fenetre::createPageConfig()
 void Fenetre::launchSolver()
 {
 	if(!pageDist->full())
-	   QMessageBox::critical(this, "Erreur", "Pas de données entrées");
+		QMessageBox::critical(this, "Erreur", "Pas de données entrées");
 	else
+	{
 		pageName->fillEmptyNames();
+
+		if(sol != NULL)
+			delete sol;
+	}
 }
 
 void Fenetre::fileInput()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, "Selectionnez un fichier", "", "*.txt");
 	printf("fichier selectionné: '%s'\n", fileName.toStdString().c_str());
+	//taillePI
 }
 
 void Fenetre::manualInput()
@@ -139,6 +179,8 @@ void Fenetre::manualInput()
 
 	pageDist->createForm(n);
 	pageName->createForm(n);
+
+	taillePI = nbCities->value();
 }
 
 void Fenetre::handleTabChanges(int index)
