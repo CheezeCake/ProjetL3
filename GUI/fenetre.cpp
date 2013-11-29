@@ -12,7 +12,6 @@
 Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 {
 	sol = NULL;
-	taillePI = 0;
 
 	//allocation onglets
 	createPageConfig();
@@ -170,7 +169,6 @@ void Fenetre::fileInput()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, "Selectionnez un fichier", "", "*.txt");
 	printf("fichier selectionné: '%s'\n", fileName.toStdString().c_str());
-	//taillePI
 }
 
 void Fenetre::manualInput()
@@ -179,8 +177,6 @@ void Fenetre::manualInput()
 
 	pageDist->createForm(n);
 	pageName->createForm(n);
-
-	taillePI = nbCities->value();
 }
 
 void Fenetre::handleTabChanges(int index)

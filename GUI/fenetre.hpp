@@ -38,7 +38,6 @@ class Fenetre : public QWidget
 		QGraphicsScene *gScene;
 
 		Solver *sol;
-		int taillePI;
 		std::vector<pair<int> > coord;
 
 		void createPageConfig();
