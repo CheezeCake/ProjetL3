@@ -2,7 +2,6 @@
 #define FENETRE_HPP
 
 #include <vector>
-#include <pair>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QDoubleSpinBox>
@@ -38,7 +37,7 @@ class Fenetre : public QWidget
 		QGraphicsScene *gScene;
 
 		Solver *sol;
-		std::vector<pair<int> > coord;
+		std::vector<std::pair<double, double> > coord;
 
 		void createPageConfig();
 
