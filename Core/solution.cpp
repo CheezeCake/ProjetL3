@@ -93,17 +93,33 @@ void Solution::slicingCrossover(const Solution &s, Solution &fils1, Solution &fi
 	fils1.parcours.resize(N);
 	fils2.parcours.resize(N);
 
+	vector<bool> used1(N, false);
+	vector<bool> used2(N, false);
+
 	int ptCoupure = Rand::randi(1, N-1);
+	int v;
 	for(int i = 0; i < ptCoupure; i++)
 	{
-		fils1.parcours[i] = parcours[i];
-		fils2.parcours[i] = s.parcours[i];
+		v = parcours[i];
+		fils1.parcours[i] = v;
+		used1[v] = true;
+
+		v = s.parcours[i];
+		fils2.parcours[i] = v;
+		used2[v] = true;
 	}
 
-	for(int i = ptCoupure; i < N; i++)
+	int j1 = ptCoupure;
+	int j2 = ptCoupure;
+	for(int i = 0; i < N; i++)
 	{
-		fils1.parcours[i] = s.parcours[i];
-		fils2.parcours[i] = parcours[i];
+		v = s.parcours[i];
+		if(!used1[v])
+			fils1.parcours[j1++] = v;
+
+		v = parcours[i];
+		if(!used2[v])
+			fils2.parcours[j2++] = v;
 	}
 }
 
@@ -125,26 +141,42 @@ void Solution::slicingCrossover(unsigned int k, const Solution &s, Solution &fil
 	sort(ptsCoupure.begin()+1, ptsCoupure.begin()+k+1);
 	ptsCoupure[k+1] = N;
 
-	int d, p1, p2;
+	vector<bool> used1(N, false);
+	vector<bool> used2(N, false);
+
+	int v;
+	int j, l;
 	for(unsigned int i = 0; i <= k; i++)
 	{
-		d = ptsCoupure[i];
+		bool pthis = ((i+1)%2 == 0);
+		j = ptsCoupure[i];
+		l = 0;
 
-		for(int j = d; j < ptsCoupure[i+1]; j++)
+		while(j < ptsCoupure[i+1])
 		{
-			p1 = parcours[j];
-			p2 = s.parcours[j];
+			v = (pthis) ? parcours[l] : s.parcours[l];
+			if(!used1[v])
+			{
+				used1[v] = true;
+				fils1.parcours[j++] = v;
+			}
 
-			if((i+1)%2 == 0)
+			l++;
+		}
+
+		j = ptsCoupure[i];
+		l = 0;
+
+		while(j < ptsCoupure[i+1])
+		{
+			v = (pthis) ? s.parcours[l] : parcours[l];
+			if(!used2[v])
 			{
-				fils1.parcours[j] = p1;
-				fils2.parcours[j] = p2;
+				used2[v] = true;
+				fils2.parcours[j++] = v;
 			}
-			else
-			{
-				fils1.parcours[j] = p2;
-				fils2.parcours[j] = p1;
-			}
+
+			l++;
 		}
 	}
 }
