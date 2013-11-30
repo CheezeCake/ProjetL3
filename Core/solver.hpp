@@ -35,6 +35,7 @@ class Solver
 		static inline double roundDistance(double);
 
 		void resoudre();
+		void iteration();
 		
 		int meilleureSol();
 
@@ -60,7 +61,6 @@ class Solver
 		void remplacementElitiste(const std::vector<Solution>&);
 
 		double fitnessMoyen();
-		void iteration();
 };
 
 #endif
