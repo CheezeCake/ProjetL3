@@ -8,7 +8,7 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QGraphicsScene>
 #include <QtWidgets/QGraphicsView>
-#include "inputDist.hpp"
+#include "inputCoord.hpp"
 #include "inputName.hpp"
 #include "solver.hpp"
 
@@ -20,7 +20,7 @@ class Fenetre : public QWidget
 		QTabWidget *tab;
 
 		QWidget *pageConfig;
-		InputDist *pageDist;
+		InputCoord *pageCoord;
 		InputName *pageName;
 
 		//input
@@ -45,6 +45,10 @@ class Fenetre : public QWidget
 		void launchSolver();
 		void manualInput();
 		void fileInput();
+		void generate();
+
+		void nextIt();
+		void goToEnd();
 
 	public:
 		Fenetre(QWidget* = 0);

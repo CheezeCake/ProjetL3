@@ -3,9 +3,10 @@ cache()
 QT += widgets
 
 SOURCES += main.cpp fenetre.cpp inputForm.cpp \
-	inputDist.cpp inputName.cpp
+	inputCoord.cpp inputName.cpp
 
 HEADERS += fenetre.hpp inputForm.hpp \
-	inputDist.hpp inputName.hpp
+	inputCoord.hpp inputName.hpp
 
-INCLUDEPATH += "../Core/"
+INCLUDEPATH += ../Core/
+LIBS += -L../Core/lib -lsolver -lc++

@@ -7,7 +7,11 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QLabel>
+#include <limits>
 #include "fenetre.hpp"
+#include "rand.hpp"
+
+using namespace std;
 
 Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 {
@@ -15,21 +19,23 @@ Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 
 	//allocation onglets
 	createPageConfig();
-	pageDist = new InputDist;
+	pageCoord = new InputCoord;
 	pageName = new InputName;
 
 	tab = new QTabWidget(this);
 	tab->addTab(pageConfig, "Config solver");
-	tab->addTab(pageDist, "Distances");
+	tab->addTab(pageCoord, "Coordonnées");
 	tab->addTab(pageName, "Noms");
 
 	tab->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
 
 	//graphe
 	gScene = new QGraphicsScene;
-	gScene->addLine(5, 10, 90, 150, QPen(QBrush(Qt::SolidPattern), 4));
+
 	gView = new QGraphicsView(gScene);
+
 	QPushButton *nextStep = new QPushButton(">>");
+	QObject::connect(nextStep, SIGNAL(clicked()), this, SLOT(nextIt()));
 
 	//affichage central
 	QGridLayout *layoutGV = new QGridLayout;
@@ -66,6 +72,7 @@ void Fenetre::createPageConfig()
 	nbCitiesGen->setDecimals(0);
 	nbCitiesGen->setMinimum(3);
 	QPushButton *generationButton = new QPushButton("Générer");
+	QObject::connect(generationButton, SIGNAL(clicked()), this, SLOT(generate()));
 
 	//separateur
 	QFrame *line = new QFrame;
@@ -154,7 +161,7 @@ void Fenetre::createPageConfig()
 
 void Fenetre::launchSolver()
 {
-	if(!pageDist->full())
+	if(!pageCoord->full())
 		QMessageBox::critical(this, "Erreur", "Pas de données entrées");
 	else
 	{
@@ -175,16 +182,32 @@ void Fenetre::manualInput()
 {
 	int n = nbCities->value();
 
-	pageDist->createForm(n);
+	pageCoord->createForm(n);
 	pageName->createForm(n);
+}
+
+void Fenetre::generate()
+{
+	int n = nbCitiesGen->value();
+
+	pageCoord->createForm(n);
+	pageName->createForm(n);
+
+	for(int i = 0; i < n; i++)
+	{
+		double x = Rand::randi()%10000;
+		double y = Rand::randi()%10000;
+
+		pageCoord->setCoordVille(i, x, y);
+	}
 }
 
 void Fenetre::handleTabChanges(int index)
 {
-	//tentative d'acces aux onglets des distances et
+	//tentative d'acces aux onglets des coordonnées et
 	//nom de villes sans avoir selectionné une methode
 	//d'entrée
-	if((index == 1 || index == 2) && pageDist->empty())
+	if((index == 1 || index == 2) && pageCoord->empty())
 	{
 		tab->setCurrentIndex(0);
 		QMessageBox::information(this, "Attention",
@@ -192,3 +215,14 @@ void Fenetre::handleTabChanges(int index)
 				"Sélectionnez l'entrée par fichier ou l'entrée manuelle en entrant un nombre de villes dans l'onglet Config solver");
 	}
 }
+
+void Fenetre::nextIt()
+{
+	if(sol == NULL)
+		return;
+
+	sol->iteration();
+}
+
+void Fenetre::goToEnd()
+{}
