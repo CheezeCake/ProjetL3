@@ -13,6 +13,9 @@ class InputName : public InputForm
 	private:
 		void addRow(int);
 
+        QLineEdit* getArea(int);
+
+
 	public:
 		InputName(QWidget* = 0);
 
@@ -21,6 +24,7 @@ class InputName : public InputForm
 
 		void fillEmptyNames();
 		void getNames(std::vector<std::string>&);
+        void setNames(std::vector<std::string>&);
 };
 
 #endif

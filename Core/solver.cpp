@@ -370,14 +370,14 @@ void Solver::resoudre()
 {
 	double temp = moyennePrec;
 	bool ok = true;
-	const int min = 5;
+    const int min = MINIMUM_ITERATIONS;
 	int i = 0;
 
 	while(ok || i < min)
 	{
 		iteration();
 		moyennePrec = fitnessMoyen();
-		temp *= 0.9;
+        temp *= AMELIORATION_MINIMALE;
 
 		if(temp < moyennePrec)
 			ok = false;

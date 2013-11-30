@@ -7,6 +7,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QLabel>
+#include <fstream>
 #include <limits>
 #include "fenetre.hpp"
 #include "rand.hpp"
@@ -176,6 +177,52 @@ void Fenetre::fileInput()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, "Selectionnez un fichier", "", "*.txt");
 	printf("fichier selectionné: '%s'\n", fileName.toStdString().c_str());
+
+    ifstream fichier(fileName.toStdString().c_str());
+
+    if(!fichier)
+    {
+        QMessageBox::critical(this, "Erreur", "Un problème est survenu durant\n l'ouverture du fichier");
+    }
+
+    else
+    {
+        int nb_villes = 0;
+        int noms = 0;
+
+        fichier >> nb_villes;
+        fichier >> noms;
+
+        pageName->createForm(nb_villes);
+        pageCoord->createForm(nb_villes);
+
+        coord.resize(nb_villes);
+        villes.resize(nb_villes);
+
+        if(noms == 0)
+        {
+            for(int i = 0; i < nb_villes; i++)
+            {
+                fichier >> coord[i].first;
+                fichier >> coord[i].second;
+                pageCoord->setCoordVille(i, coord[i].first, coord[i].second);
+
+            }
+        }
+
+        else
+        {
+            for(int i = 0; i < nb_villes; i++)
+            {
+                fichier >> villes[i];
+                fichier >> coord[i].first;
+                fichier >> coord[i].second;
+                pageCoord->setCoordVille(i, coord[i].first, coord[i].second);
+            }
+            pageName->setNames(villes);
+        }
+        tab->setCurrentIndex(1);
+    }
 }
 
 void Fenetre::manualInput()

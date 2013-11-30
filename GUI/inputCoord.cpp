@@ -33,6 +33,9 @@ void InputCoord::createForm(int cities)
 		x->setMaximum(numeric_limits<int>::max());
 		y->setMaximum(numeric_limits<int>::max());
 
+        x->setMinimum(numeric_limits<int>::min());
+        y->setMinimum(numeric_limits<int>::min());
+
 		QHBoxLayout *ligne = new QHBoxLayout;
 		ligne->addWidget(V);
 		ligne->addWidget(x);

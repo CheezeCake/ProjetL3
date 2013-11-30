@@ -1,11 +1,20 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QMessageBox>
 #include "inputName.hpp"
 
 using namespace std;
 
 InputName::InputName(QWidget *parent) : InputForm(parent)
 {}
+
+QLineEdit* InputName::getArea(int n)
+{
+    if(n > count())
+        return NULL;
+
+    return static_cast<QLineEdit*>(layout->itemAt(n)->widget());
+}
 
 void InputName::createForm(int cities)
 {
@@ -72,4 +81,16 @@ void InputName::getNames(vector<string> &villes)
 		name = static_cast<QLineEdit*>(layout->itemAt(i)->widget());
 		villes[j++] = name->text().toStdString();
 	}
+}
+
+void InputName::setNames(vector<string> &villes)
+{
+    int n = count();
+    int y = 0;
+
+    for(int i = 1; i < n; i += 2)
+    {
+        getArea(i)->setText(QString(villes[y].c_str()));
+        y++;
+    }
 }
