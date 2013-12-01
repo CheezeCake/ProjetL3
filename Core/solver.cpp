@@ -61,6 +61,10 @@ void Solver::genererPI()
 	int N = distances.size();
 	vector<int> parcours(N);
 	int i = 0;
+	
+	int temp = fact(N-1)*PI_MAX_SIZE;
+	if(taillePI >= temp)
+		taillePI = temp;
 
 	while(i < taillePI)
 	{
