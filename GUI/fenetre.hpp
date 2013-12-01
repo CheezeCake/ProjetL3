@@ -8,6 +8,7 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QGraphicsScene>
 #include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QLabel>
 #include "inputCoord.hpp"
 #include "inputName.hpp"
 #include "solver.hpp"
@@ -46,6 +47,9 @@ class Fenetre : public QWidget
 		void renderScene();
 		void renderCities(int, int);
 		void renderPath(std::vector<int>&);
+
+		QLabel *score;
+		void updateScore();
 
 		void copyFinalPath();
 		QString finalPath;

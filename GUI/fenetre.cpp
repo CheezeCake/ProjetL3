@@ -46,12 +46,15 @@ Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 	QPushButton *reachEnd = new QPushButton(">|");
 	reachEnd->setToolTip("aller directement à la dernière itération");
 	QObject::connect(reachEnd, SIGNAL(clicked()), this, SLOT(goToEnd()));
+	score = new QLabel("score: ");
 
 	//affichage central
 	QGridLayout *layoutGV = new QGridLayout;
 	layoutGV->addWidget(gView, 0, 0);
-	layoutGV->addWidget(nextStep, 1, 0, Qt::AlignRight);
-	layoutGV->addWidget(reachEnd, 2, 0, Qt::AlignRight);
+	layoutGV->addWidget(score, 1, 0, Qt::AlignHCenter);
+	layoutGV->addWidget(nextStep, 2, 0, Qt::AlignRight);
+	layoutGV->addWidget(reachEnd, 3, 0, Qt::AlignRight);
+
 
 	QPushButton *validate = new QPushButton("Lancer solveur");
 	QObject::connect(validate, SIGNAL(clicked()), this, SLOT(launchSolver()));
@@ -203,7 +206,17 @@ void Fenetre::launchSolver()
 
 		sol = new Solver(distances, taillePI, s, c, r);
 		renderScene();
+		updateScore();
 	}
+}
+
+void Fenetre::updateScore()
+{
+	if(sol == NULL)
+		return;
+
+	Solution best(sol->meilleureSol());
+	score->setText("Score: "+QString::number(best.getScore()));
 }
 
 void Fenetre::fileInput()
@@ -339,6 +352,7 @@ void Fenetre::nextIt()
 		sol->iteration();
 		//sol->afficher();
 		renderScene();
+		updateScore();
 	}
 }
 
