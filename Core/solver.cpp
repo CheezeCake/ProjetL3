@@ -15,13 +15,22 @@ Solver::Solver(const vector<vector<double> > &distances, int taillePI, Selection
 	this->taillePI = taillePI;
 	this->distances = distances;
 
-	population.resize(taillePI);
 	tSelection = selec;
 	tCroisement = crois;
 	tRemplacement = remp;
 
 	genererPI();
 	moyennePrec = fitnessMoyen();
+	nbIteration = 0;
+	arret = false;
+}
+
+double fact(int n)
+{
+	if(n == 0)
+		return 1;
+
+	return n*fact(n-1);
 }
 
 void Solver::genererPI()
@@ -29,11 +38,15 @@ void Solver::genererPI()
 	int N = distances.size();
 	vector<int> parcours(N);
 	int i = 0;
-	
-	int temp = fact(N-1)*PI_MAX_SIZE;
-	if(taillePI >= temp)
-		taillePI = temp;
 
+	if(N < 13)
+	{
+		double temp = fact(N-1)*PI_MAX_SIZE;
+		if(static_cast<double>(taillePI) >= temp)
+			taillePI = temp;
+	}
+
+	population.resize(taillePI);
 	while(i < taillePI)
 	{
 		for(int j = 0; j < N; j++)
@@ -325,6 +338,9 @@ double Solver::fitnessMoyen()
 
 void Solver::iteration()
 {
+	if(fin())
+		return;
+
 	if(tSelection == ROULETTE)
 		selectionRoulette();
 
@@ -338,26 +354,29 @@ void Solver::iteration()
 		selectionElitisme();
 
 	reproduction();
+
+	arret = critereArret();
+	nbIteration++;
+}
+
+bool Solver::critereArret()
+{
+	double old = moyennePrec;
+	moyennePrec = fitnessMoyen();
+	old *= AMELIORATION_MINIMALE;
+
+	return (old <= moyennePrec);
+}
+
+bool Solver::fin()
+{
+	return (arret && nbIteration >= MINIMUM_ITERATIONS);
 }
 
 void Solver::resoudre()
 {
-	double temp = moyennePrec;
-	bool ok = true;
-	int i = 0;
-
-	while(ok || i < MINIMUM_ITERATIONS)
-	{
+	while(!fin())
 		iteration();
-		moyennePrec = fitnessMoyen();
-		temp *= AMELIORATION_MINIMALE;
-
-		if(temp < moyennePrec)
-			ok = false;
-		else
-			temp = moyennePrec;
-		i++;
-	}
 }
 
 Solution Solver::meilleureSol()

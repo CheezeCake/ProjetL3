@@ -34,12 +34,15 @@ class Solver
 
 		void resoudre();
 		void iteration();
+		bool fin();
 		
 		Solution meilleureSol();
 
 	private:
 		std::vector<std::vector<double> > distances;
 		int taillePI;
+		int nbIteration;
+		bool arret;
 		std::vector<Solution> population;
 		std::vector<int> selection;
 		Croisement tCroisement;
@@ -58,6 +61,7 @@ class Solver
 		void remplacementElitiste(const std::vector<Solution>&);
 
 		double fitnessMoyen();
+		bool critereArret();
 };
 
 #endif

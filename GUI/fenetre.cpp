@@ -12,6 +12,7 @@
 #include <fstream>
 #include <limits>
 #include <cmath>
+#include <cstdio>
 #include "fenetre.hpp"
 #include "rand.hpp"
 #include "configGui.hpp"
@@ -40,12 +41,17 @@ Fenetre::Fenetre(QWidget *parent) : QWidget(parent)
 	gView = new QGraphicsView(gScene);
 
 	QPushButton *nextStep = new QPushButton(">>");
+	nextStep->setToolTip("itération suivante");
 	QObject::connect(nextStep, SIGNAL(clicked()), this, SLOT(nextIt()));
+	QPushButton *reachEnd = new QPushButton(">|");
+	reachEnd->setToolTip("aller directement à la dernière itération");
+	QObject::connect(reachEnd, SIGNAL(clicked()), this, SLOT(goToEnd()));
 
 	//affichage central
 	QGridLayout *layoutGV = new QGridLayout;
 	layoutGV->addWidget(gView, 0, 0);
 	layoutGV->addWidget(nextStep, 1, 0, Qt::AlignRight);
+	layoutGV->addWidget(reachEnd, 2, 0, Qt::AlignRight);
 
 	QPushButton *validate = new QPushButton("Lancer solveur");
 	QObject::connect(validate, SIGNAL(clicked()), this, SLOT(launchSolver()));
@@ -284,7 +290,7 @@ void Fenetre::getDistances(vector<vector<double> > &dist)
 
 	for(int i = 0; i < n; i++)
 	{
-		dist[i].resize(n, -1);
+		dist[i].resize(n);
 		double xi = coord[i].first;
 		double yi = coord[i].second;
 
@@ -295,7 +301,7 @@ void Fenetre::getDistances(vector<vector<double> > &dist)
 
 			double x = (xj-xi)*(xj-xi);
 			double y = (yj-yi)*(yj-yi);
-			dist[i][j] = sqrt(x-y);
+			dist[i][j] = sqrt(x+y);
 		}
 	}
 }
@@ -319,12 +325,30 @@ void Fenetre::nextIt()
 	if(sol == NULL)
 		return;
 
-	sol->iteration();
-	renderScene();
+	if(sol->fin())
+	{
+		if(finalPath.isEmpty())
+			copyFinalPath();
+
+		QMessageBox::information(this, "Fin du solver", "Le solver a trouve le chemin optimal suivant:\n"+finalPath+"\nDe poid: "+QString::number(finalPathCost));
+		return;
+	}
+	else
+	{
+		sol->iteration();
+		//sol->afficher();
+		renderScene();
+	}
 }
 
 void Fenetre::goToEnd()
-{}
+{
+	if(sol == NULL)
+		return;
+
+	while(!sol->fin())
+		nextIt();
+}
 
 void Fenetre::renderCities(int begin, int end)
 {
@@ -369,4 +393,21 @@ void Fenetre::renderScene()
 	gScene->clear();
 	renderCities(0, path.back());
 	renderPath(path);
+}
+
+void Fenetre::copyFinalPath()
+{
+	if(sol == NULL)
+		return;
+
+	Solution final(sol->meilleureSol());
+	vector<int> final_p;
+
+	final.getParcours(final_p);
+	finalPath.clear();
+	for(unsigned int i = 0; i < final_p.size()-1; i++)
+		finalPath += QString::number(final_p[i])+"->";
+	finalPath += QString::number(final_p[final_p.size()-1])+"->";
+
+	finalPathCost = final.getScore();
 }

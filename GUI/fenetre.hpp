@@ -47,6 +47,10 @@ class Fenetre : public QWidget
 		void renderCities(int, int);
 		void renderPath(std::vector<int>&);
 
+		void copyFinalPath();
+		QString finalPath;
+		int finalPathCost;
+
 	private slots:
 		void launchSolver();
 		void manualInput();

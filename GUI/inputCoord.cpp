@@ -49,21 +49,6 @@ void InputCoord::createForm(int cities)
 
 bool InputCoord::full()
 {
-	/*
-	if(empty())
-		return false;
-
-	int n = count();
-
-	for(int i = 0; i < n; i++)
-	{
-		if(getSpinboxX(i)->value() == 0.0)
-			return false;
-	}
-
-	return true;
-	*/
-
 	return (!empty());
 }
 
