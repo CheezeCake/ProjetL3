@@ -25,6 +25,7 @@ Solver::Solver(const vector<string> &villes, const vector<vector<double> > &dist
 	moyennePrec = fitnessMoyen();
 }
 
+/*
 Solver::Solver(const string &nomFichier)
 {
 	ifstream flux(nomFichier.c_str());
@@ -53,6 +54,7 @@ Solver::Solver(const string &nomFichier)
 	}
 	genererPI();
 }
+*/
 
 void Solver::genererPI()
 {

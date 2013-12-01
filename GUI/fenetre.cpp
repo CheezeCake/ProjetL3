@@ -7,6 +7,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QLabel>
+#include <iostream>
 #include <fstream>
 #include <limits>
 #include <cmath>
@@ -141,7 +142,7 @@ void Fenetre::createPageConfig()
 	//selection taille population initiale
 	sizePI = new QDoubleSpinBox;
 	sizePI->setDecimals(0);
-	sizePI->setMinimum(0);
+	sizePI->setMinimum(1);
 
 	QFormLayout *layoutConfig = new QFormLayout;
 	layoutConfig->addRow("Taille PI:", sizePI);
@@ -180,7 +181,6 @@ void Fenetre::launchSolver()
 			delete sol;
 		}
 
-
 		//creation du solver
 		pageName->getNames(villes);
 		pageCoord->getCoord(coord);
@@ -192,7 +192,7 @@ void Fenetre::launchSolver()
 		Solver::Croisement c = static_cast<Solver::Croisement>(selectCroisement->currentIndex());
 		Solver::Remplacement r = static_cast<Solver::Remplacement>(selectRemplacement->currentIndex());
 
-		//sol = new Solver(villes, distances, taillePI, s, c, r);
+		sol = new Solver(villes, distances, taillePI, s, c, r);
 	}
 }
 
@@ -281,18 +281,18 @@ void Fenetre::getDistances(vector<vector<double> > &dist)
 
 	for(int i = 0; i < n; i++)
 	{
-		dist[i].resize(n);
+		dist[i].resize(n, -1);
+		double xi = coord[i].first;
+		double yi = coord[i].second;
+
 		for(int j = 0; j < n; j++)
 		{
-			double xi = coord[i].first;
-			double yi = coord[i].second;
-
 			double xj = coord[j].first;
 			double yj = coord[j].second;
 
 			double x = (xj-xi)*(xj-xi);
 			double y = (yj-yi)*(yj-yi);
-			dist[i][j] = dist[j][i] = sqrt(x-y);
+			dist[i][j] = sqrt(x-y);
 		}
 	}
 }

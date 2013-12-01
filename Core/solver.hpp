@@ -21,7 +21,7 @@ class Solver
 		enum Remplacement { STATIONNAIRE, ELITISTE };
 
 		Solver(const std::vector<std::string>&, const std::vector<std::vector<double> >&, int, Selection, Croisement, Remplacement);
-		Solver(const std::string&);
+		//Solver(const std::string&);
 
 		void afficher();
 		void afficherSelection() const;

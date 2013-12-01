@@ -9,4 +9,4 @@ HEADERS += fenetre.hpp inputForm.hpp \
 	inputCoord.hpp inputName.hpp
 
 INCLUDEPATH += ../Core/
-LIBS += -L../Core/lib -lsolver -lc++
+LIBS += -L../Core/lib -lsolver

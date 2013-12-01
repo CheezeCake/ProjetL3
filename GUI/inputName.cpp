@@ -1,6 +1,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMessageBox>
+#include <cstdio>
 #include "inputName.hpp"
 
 using namespace std;

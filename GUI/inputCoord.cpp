@@ -56,7 +56,7 @@ bool InputCoord::full()
 
 	for(int i = 0; i < n; i++)
 	{
-		if(getSpinboxX(n)->value() == 0.0)
+		if(getSpinboxX(i)->value() == 0.0)
 			return false;
 	}
 
