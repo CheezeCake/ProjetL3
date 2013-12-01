@@ -10,10 +10,10 @@ InputName::InputName(QWidget *parent) : InputForm(parent)
 
 QLineEdit* InputName::getArea(int n)
 {
-    if(n > count())
-        return NULL;
+	if(n > count())
+		return NULL;
 
-    return static_cast<QLineEdit*>(layout->itemAt(n)->widget());
+	return static_cast<QLineEdit*>(layout->itemAt(n)->widget());
 }
 
 void InputName::createForm(int cities)
@@ -85,12 +85,12 @@ void InputName::getNames(vector<string> &villes)
 
 void InputName::setNames(vector<string> &villes)
 {
-    int n = count();
-    int y = 0;
+	int n = count();
+	int y = 0;
 
-    for(int i = 1; i < n; i += 2)
-    {
-        getArea(i)->setText(QString(villes[y].c_str()));
-        y++;
-    }
+	for(int i = 1; i < n; i += 2)
+	{
+		getArea(i)->setText(QString(villes[y].c_str()));
+		y++;
+	}
 }

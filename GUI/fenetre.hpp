@@ -38,7 +38,7 @@ class Fenetre : public QWidget
 
 		Solver *sol;
 		std::vector<std::pair<double, double> > coord;
-        std::vector<std::string> villes;
+		std::vector<std::string> villes;
 
 		void createPageConfig();
 
