@@ -41,6 +41,7 @@ class Fenetre : public QWidget
 		std::vector<std::string> villes;
 
 		void createPageConfig();
+		void getDistances(std::vector<std::vector<double> >&);
 
 	private slots:
 		void launchSolver();

@@ -9,6 +9,7 @@
 #include <QtWidgets/QLabel>
 #include <fstream>
 #include <limits>
+#include <cmath>
 #include "fenetre.hpp"
 #include "rand.hpp"
 
@@ -169,7 +170,29 @@ void Fenetre::launchSolver()
 		pageName->fillEmptyNames();
 
 		if(sol != NULL)
+		{
+			int choice = QMessageBox::warning(this, "", "Un autre solveur est lancé en ce moment\n"
+					"Arreter ce solveur et en lancer un nouveau avec les données présentes dans les onglets ?", QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Cancel);
+
+			if(choice == QMessageBox::Cancel)
+				return;
+
 			delete sol;
+		}
+
+
+		//creation du solver
+		pageName->getNames(villes);
+		pageCoord->getCoord(coord);
+		vector<vector<double> > distances;
+		getDistances(distances);
+
+		int taillePI = sizePI->value();
+		Solver::Selection s = static_cast<Solver::Selection>(selectSelection->currentIndex());
+		Solver::Croisement c = static_cast<Solver::Croisement>(selectCroisement->currentIndex());
+		Solver::Remplacement r = static_cast<Solver::Remplacement>(selectRemplacement->currentIndex());
+
+		//sol = new Solver(villes, distances, taillePI, s, c, r);
 	}
 }
 
@@ -231,6 +254,8 @@ void Fenetre::manualInput()
 
 	pageCoord->createForm(n);
 	pageName->createForm(n);
+
+	tab->setCurrentIndex(1);
 }
 
 void Fenetre::generate()
@@ -246,6 +271,29 @@ void Fenetre::generate()
 		double y = Rand::randi()%10000;
 
 		pageCoord->setCoordVille(i, x, y);
+	}
+}
+
+void Fenetre::getDistances(vector<vector<double> > &dist)
+{
+	int n = coord.size();
+	dist.resize(n);
+
+	for(int i = 0; i < n; i++)
+	{
+		dist[i].resize(n);
+		for(int j = 0; j < n; j++)
+		{
+			double xi = coord[i].first;
+			double yi = coord[i].second;
+
+			double xj = coord[j].first;
+			double yj = coord[j].second;
+
+			double x = (xj-xi)*(xj-xi);
+			double y = (yj-yi)*(yj-yi);
+			dist[i][j] = dist[j][i] = sqrt(x-y);
+		}
 	}
 }
 

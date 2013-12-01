@@ -23,8 +23,6 @@ class InputCoord : public InputForm
 		void setCoord(std::vector<std::pair<double, double> >&);
 		void getCoord(std::vector<std::pair<double, double> >&);
 
-		void getDistances(std::vector<std::vector<double> >&);
-
 		void setCoordVille(int n, double x, double y);
 };
 

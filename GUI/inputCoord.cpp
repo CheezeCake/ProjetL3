@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <limits>
 #include <cstdio>
-#include <cmath>
 #include "inputCoord.hpp"
 
 using namespace std;
@@ -92,29 +91,6 @@ void InputCoord::setCoord(vector<pair<double, double> > &c)
 
 	for(int i = 0; i < n; i++)
 		setCoordVille(i, c[i].first, c[i].second);
-}
-
-void InputCoord::getDistances(vector<vector<double> > &d)
-{
-	int n = count();
-	d.resize(n);
-
-	for(int i = 0; i < n; i++)
-	{
-		d[i].resize(n);
-		for(int j = 0; j < n; j++)
-		{
-			double xi = getSpinboxX(i)->value();
-			double yi = getSpinboxY(i)->value();
-
-			double xj = getSpinboxX(j)->value();
-			double yj = getSpinboxY(j)->value();
-
-			double x = (xj-xi)*(xj-xi);
-			double y = (yj-yi)*(yj-yi);
-			d[i][j] = d[j][i] = sqrt(x-y);
-		}
-	}
 }
 
 void InputCoord::getCoord(std::vector<std::pair<double, double> > &c)
