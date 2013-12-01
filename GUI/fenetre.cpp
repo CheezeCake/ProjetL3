@@ -194,7 +194,7 @@ void Fenetre::launchSolver()
 		Solver::Croisement c = static_cast<Solver::Croisement>(selectCroisement->currentIndex());
 		Solver::Remplacement r = static_cast<Solver::Remplacement>(selectRemplacement->currentIndex());
 
-		sol = new Solver(villes, distances, taillePI, s, c, r);
+		sol = new Solver(distances, taillePI, s, c, r);
 		renderScene();
 	}
 }

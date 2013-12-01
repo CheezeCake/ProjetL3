@@ -10,10 +10,9 @@
 
 using namespace std;
 
-Solver::Solver(const vector<string> &villes, const vector<vector<double> > &distances, int taillePI, Selection selec, Croisement crois, Remplacement remp)
+Solver::Solver(const vector<vector<double> > &distances, int taillePI, Selection selec, Croisement crois, Remplacement remp)
 {
 	this->taillePI = taillePI;
-	this->villes = villes;
 	this->distances = distances;
 
 	population.resize(taillePI);
@@ -24,37 +23,6 @@ Solver::Solver(const vector<string> &villes, const vector<vector<double> > &dist
 	genererPI();
 	moyennePrec = fitnessMoyen();
 }
-
-/*
-Solver::Solver(const string &nomFichier)
-{
-	ifstream flux(nomFichier.c_str());
-
-	int nb, a, b;
-	double dist;
-	flux >> nb;
-	taillePI = 10;
-
-	population.resize(taillePI);
-	distances.resize(nb);
-	villes.resize(nb);
-
-	for(int i = 0; i < nb; i++)
-	{
-		villes[i] = i;
-		distances[i].resize(nb);
-	}
-	while(!flux.eof())
-	{
-		flux >> a;
-		flux >> b;
-		flux >> dist;
-		distances[a][b] = dist;
-		distances[b][a] = dist;
-	}
-	genererPI();
-}
-*/
 
 void Solver::genererPI()
 {

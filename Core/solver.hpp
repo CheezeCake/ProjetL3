@@ -2,7 +2,6 @@
 #define SOLVER_HPP
 
 #include <vector>
-#include <string>
 #include "solution.hpp"
 
 template<typename T>
@@ -20,8 +19,7 @@ class Solver
 		enum Selection { ROULETTE, RANG, TOURNOI, ELITISME };
 		enum Remplacement { STATIONNAIRE, ELITISTE };
 
-		Solver(const std::vector<std::string>&, const std::vector<std::vector<double> >&, int, Selection, Croisement, Remplacement);
-		//Solver(const std::string&);
+		Solver(const std::vector<std::vector<double> >&, int, Selection, Croisement, Remplacement);
 
 		void afficher();
 		void afficherSelection() const;
@@ -40,7 +38,6 @@ class Solver
 		Solution meilleureSol();
 
 	private:
-		std::vector<std::string> villes;
 		std::vector<std::vector<double> > distances;
 		int taillePI;
 		std::vector<Solution> population;
