@@ -151,6 +151,7 @@ void Fenetre::createPageConfig()
 	sizePI = new QDoubleSpinBox;
 	sizePI->setDecimals(0);
 	sizePI->setMinimum(1);
+	sizePI->setMaximum(numeric_limits<int>::max());
 
 	QFormLayout *layoutConfig = new QFormLayout;
 	layoutConfig->addRow("Taille PI:", sizePI);
