@@ -6,7 +6,8 @@ SOURCES += main.cpp fenetre.cpp inputForm.cpp \
 	inputCoord.cpp inputName.cpp
 
 HEADERS += fenetre.hpp inputForm.hpp \
-	inputCoord.hpp inputName.hpp
+	inputCoord.hpp inputName.hpp \
+	configGui.hpp
 
 INCLUDEPATH += ../Core/
 LIBS += -L../Core/lib -lsolver
