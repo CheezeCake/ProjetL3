@@ -53,7 +53,7 @@ class Fenetre : public QWidget
 
 		void copyFinalPath();
 		QString finalPath;
-		int finalPathCost;
+		double finalPathCost;
 
 	private slots:
 		void launchSolver();
