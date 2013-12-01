@@ -370,10 +370,9 @@ void Solver::resoudre()
 {
 	double temp = moyennePrec;
 	bool ok = true;
-	const int min = MINIMUM_ITERATIONS;
 	int i = 0;
 
-	while(ok || i < min)
+	while(ok || i < MINIMUM_ITERATIONS)
 	{
 		iteration();
 		moyennePrec = fitnessMoyen();
