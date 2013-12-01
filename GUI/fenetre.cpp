@@ -7,12 +7,14 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QLabel>
+#include <QGraphicsSimpleTextItem>
 #include <iostream>
 #include <fstream>
 #include <limits>
 #include <cmath>
 #include "fenetre.hpp"
 #include "rand.hpp"
+#include "configGui.hpp"
 
 using namespace std;
 
@@ -193,6 +195,7 @@ void Fenetre::launchSolver()
 		Solver::Remplacement r = static_cast<Solver::Remplacement>(selectRemplacement->currentIndex());
 
 		sol = new Solver(villes, distances, taillePI, s, c, r);
+		renderScene();
 	}
 }
 
@@ -267,8 +270,8 @@ void Fenetre::generate()
 
 	for(int i = 0; i < n; i++)
 	{
-		double x = Rand::randi()%10000;
-		double y = Rand::randi()%10000;
+		double x = Rand::randi()%700;
+		double y = Rand::randi()%700;
 
 		pageCoord->setCoordVille(i, x, y);
 	}
@@ -317,7 +320,53 @@ void Fenetre::nextIt()
 		return;
 
 	sol->iteration();
+	renderScene();
 }
 
 void Fenetre::goToEnd()
 {}
+
+void Fenetre::renderCities(int begin, int end)
+{
+	int n = coord.size();
+
+	for(int i = 0; i < n; i++)
+	{
+		gScene->addEllipse(QRectF(coord[i].first-CITY_SIZE/2, coord[i].second-CITY_SIZE/2, CITY_SIZE, CITY_SIZE),
+				QPen(), QBrush(Qt::SolidPattern));
+
+		QString name(villes[i].c_str());
+		if(i == begin)
+			name += "(DEPART)";
+		else if(i == end)
+			name += "(FIN)";
+
+		QGraphicsSimpleTextItem * text = gScene->addSimpleText(name);
+		QRectF rect = text->boundingRect();
+		text->setPos(coord[i].first-rect.width()/2, coord[i].second-rect.height());
+	}
+}
+
+void Fenetre::renderPath(vector<int> &path)
+{
+	int n = path.size();
+
+	for(int i = 0; i < n-1; i++)
+	{
+		int  a = path[i];
+		int b = path[i+1];
+
+		gScene->addLine(coord[a].first, coord[a].second, coord[b].first, coord[b].second);
+	}
+}
+
+void Fenetre::renderScene()
+{
+	Solution best(sol->meilleureSol());
+	vector<int> path;
+	best.getParcours(path);
+
+	gScene->clear();
+	renderCities(0, path.back());
+	renderPath(path);
+}

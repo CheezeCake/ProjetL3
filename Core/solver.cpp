@@ -80,7 +80,7 @@ void Solver::afficher()
 	for(int i = 0; i < taillePI; i++)
 		population[i].afficher();
 	cout << endl << "----Meilleure solution----" << endl;
-	population[meilleureSol()].afficher();
+	meilleureSol().afficher();
 }
 
 void Solver::afficherSelection() const
@@ -388,7 +388,7 @@ void Solver::resoudre()
 	}
 }
 
-int Solver::meilleureSol()
+Solution Solver::meilleureSol()
 {
 	int N = population.size();
 	double min = population[0].getScore();
@@ -403,5 +403,5 @@ int Solver::meilleureSol()
 			meilleure = i;
 		}
 	}
-	return meilleure;
+	return population[meilleure];
 }

@@ -37,7 +37,7 @@ class Solver
 		void resoudre();
 		void iteration();
 		
-		int meilleureSol();
+		Solution meilleureSol();
 
 	private:
 		std::vector<std::string> villes;

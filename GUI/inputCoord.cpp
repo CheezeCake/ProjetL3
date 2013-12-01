@@ -49,6 +49,7 @@ void InputCoord::createForm(int cities)
 
 bool InputCoord::full()
 {
+	/*
 	if(empty())
 		return false;
 
@@ -61,6 +62,9 @@ bool InputCoord::full()
 	}
 
 	return true;
+	*/
+
+	return (!empty());
 }
 
 QDoubleSpinBox* InputCoord::getSpinboxY(int n)

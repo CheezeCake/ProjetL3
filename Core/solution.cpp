@@ -193,3 +193,7 @@ void Solution::mutation(Solution &result) const
 	//calculer score
 }
 	
+void Solution::getParcours(vector<int> &p)
+{
+	p = parcours;
+}

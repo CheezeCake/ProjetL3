@@ -23,6 +23,8 @@ class Solution
 		void slicingCrossover(const Solution&, Solution&, Solution&) const;
 		void slicingCrossover(unsigned int, const Solution&, Solution&, Solution&) const;
 		void mutation(Solution&) const;
+
+		void getParcours(std::vector<int>&);
 };
 
 #endif
