@@ -348,6 +348,7 @@ void Fenetre::goToEnd()
 
 	while(!sol->fin())
 		nextIt();
+	nextIt();
 }
 
 void Fenetre::renderCities(int begin, int end)
