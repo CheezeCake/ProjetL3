@@ -10,7 +10,7 @@ all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	@mkdir -p $(LIB_DIR)
-	@$(AR) rv $@ $^
+	@$(AR) rcvs $@ $^
 
 %.o: %.cpp %.hpp
 	$(CXX) -c $< $(CXXFLAGS)
