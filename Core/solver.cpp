@@ -58,6 +58,8 @@ void Solver::genererPI()
 		if(!presente(parcours, i))
 			population[i++] = Solution(parcours, distances);
 	}
+
+    bestSol = population[0];
 }
 
 void Solver::afficher()
@@ -356,6 +358,11 @@ void Solver::iteration()
 	reproduction();
 
 	arret = critereArret();
+
+    Solution s(meilleureSol());
+    if(s < bestSol)
+        bestSol = s;
+
 	nbIteration++;
 }
 
@@ -395,4 +402,9 @@ Solution Solver::meilleureSol()
 		}
 	}
 	return population[meilleure];
+}
+
+Solution Solver::getBestSol()
+{
+    return bestSol;
 }
