@@ -342,7 +342,10 @@ void Fenetre::nextIt()
 	if(sol->fin())
 	{
 		if(finalPath.isEmpty())
+		{
 			copyFinalPath();
+			Score = finalPathCost;
+		}
 
 		QMessageBox::information(this, "Fin du solver", "Le solver a trouve le chemin optimal suivant:\n"+finalPath+"\nDe poid: "+QString::number(finalPathCost));
 		return;
@@ -423,7 +426,7 @@ void Fenetre::copyFinalPath()
 	finalPath.clear();
 	for(unsigned int i = 0; i < final_p.size()-1; i++)
 		finalPath += QString::number(final_p[i])+"->";
-	finalPath += QString::number(final_p[final_p.size()-1])+"->";
+	finalPath += QString::number(final_p[final_p.size()-1]);
 
 	finalPathCost = final.getScore();
 }
