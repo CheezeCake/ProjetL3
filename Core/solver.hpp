@@ -37,6 +37,7 @@ class Solver
 		bool fin();
 		
 		Solution meilleureSol();
+        Solution getBestSol();
 
 	private:
 		std::vector<std::vector<double> > distances;
@@ -48,6 +49,7 @@ class Solver
 		Croisement tCroisement;
 		Selection tSelection;
 		Remplacement tRemplacement;
+        Solution bestSol;
 		double moyennePrec;
 
 		void genererPI();
