@@ -59,7 +59,7 @@ void Solver::genererPI()
 			population[i++] = Solution(parcours, distances);
 	}
 
-    bestSol = population[0];
+	bestSol = population[0];
 }
 
 void Solver::afficher()
@@ -102,7 +102,7 @@ void Solver::selectionRoulette()
 		secteurs[i].indice = i;
 
 	double maxDistance = max_element(population.begin(),
-	                                 population.end())->getScore()+DIST_MIN_NN;
+			population.end())->getScore()+DIST_MIN_NN;
 	int id = 0;
 	for(int i = 0; i < n; i++)
 	{
@@ -209,7 +209,7 @@ void Solver::selectionElitisme()
 	}
 }
 
-template<typename T>
+	template<typename T>
 int Solver::getSecteurId(const vector<Secteur<T> > &secteurs, T val)
 {
 	int d = 0;
@@ -264,7 +264,7 @@ void Solver::reproduction()
 			population[selection[i]].slicingCrossover(population[selection[i+1]], temp1, temp2);
 		else if(tCroisement == KSLICING)
 			population[selection[i]].slicingCrossover(k, population[selection[i+1]], temp1, temp2);
-		
+
 		temp1.calculerScore(distances);
 		temp2.calculerScore(distances);
 
@@ -273,7 +273,7 @@ void Solver::reproduction()
 		if(!presente(enfants, temp2))
 			enfants.push_back(temp2);
 	}
-	
+
 	for(int i = moitie; i < taille; i++)
 	{
 		population[selection[i]].mutation(temp1);
@@ -359,9 +359,9 @@ void Solver::iteration()
 
 	arret = critereArret();
 
-    Solution s(meilleureSol());
-    if(s < bestSol)
-        bestSol = s;
+	Solution s(meilleureSol());
+	if(s < bestSol)
+		bestSol = s;
 
 	nbIteration++;
 }
@@ -406,5 +406,5 @@ Solution Solver::meilleureSol()
 
 Solution Solver::getBestSol()
 {
-    return bestSol;
+	return bestSol;
 }

@@ -35,9 +35,9 @@ class Solver
 		void resoudre();
 		void iteration();
 		bool fin();
-		
+
 		Solution meilleureSol();
-        Solution getBestSol();
+		Solution getBestSol();
 
 	private:
 		std::vector<std::vector<double> > distances;
@@ -49,7 +49,7 @@ class Solver
 		Croisement tCroisement;
 		Selection tSelection;
 		Remplacement tRemplacement;
-        Solution bestSol;
+		Solution bestSol;
 		double moyennePrec;
 
 		void genererPI();
@@ -57,7 +57,7 @@ class Solver
 		inline bool presente(const std::vector<Solution>&, const Solution&) const;
 
 		template<typename T>
-		static int getSecteurId(const std::vector<Secteur<T> >&, T);
+			static int getSecteurId(const std::vector<Secteur<T> >&, T);
 
 		void remplacementStationnaire(const std::vector<Solution>&);
 		void remplacementElitiste(const std::vector<Solution>&);
