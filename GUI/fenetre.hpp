@@ -49,7 +49,7 @@ class Fenetre : public QWidget
 		void renderPath(std::vector<int>&);
 
 		QLabel *score;
-		void updateScore();
+		void updateScore(double);
 
 		void copyFinalPath();
 		QString finalPath;

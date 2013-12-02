@@ -206,17 +206,13 @@ void Fenetre::launchSolver()
 
 		sol = new Solver(distances, taillePI, s, c, r);
 		renderScene();
-		updateScore();
+		updateScore(sol->meilleureSol().getScore());
 	}
 }
 
-void Fenetre::updateScore()
+void Fenetre::updateScore(double bestScore)
 {
-	if(sol == NULL)
-		return;
-
-	Solution best(sol->meilleureSol());
-	score->setText("Score: "+QString::number(best.getScore()));
+	score->setText("Score: "+QString::number(bestScore));
 }
 
 void Fenetre::fileInput()
@@ -341,21 +337,15 @@ void Fenetre::nextIt()
 
 	if(sol->fin())
 	{
-		if(finalPath.isEmpty())
-		{
-			copyFinalPath();
-			updateScore();
-		}
-
+		copyFinalPath();
 		QMessageBox::information(this, "Fin du solver", "Le solver a trouve le chemin optimal suivant:\n"+finalPath+"\nDe poid: "+QString::number(finalPathCost));
-		return;
 	}
 	else
 	{
 		sol->iteration();
 		//sol->afficher();
 		renderScene();
-		updateScore();
+		updateScore(sol->meilleureSol().getScore());
 	}
 }
 
@@ -419,14 +409,15 @@ void Fenetre::copyFinalPath()
 	if(sol == NULL)
 		return;
 
-	Solution final(sol->meilleureSol());
+	//Solution bestOverall(sol->getBestSol());
+	Solution bestOverall(sol->meilleureSol());
 	vector<int> final_p;
 
-	final.getParcours(final_p);
+	bestOverall.getParcours(final_p);
 	finalPath.clear();
 	for(unsigned int i = 0; i < final_p.size()-1; i++)
 		finalPath += QString::number(final_p[i])+"->";
 	finalPath += QString::number(final_p[final_p.size()-1]);
 
-	finalPathCost = final.getScore();
+	finalPathCost = bestOverall.getScore();
 }
