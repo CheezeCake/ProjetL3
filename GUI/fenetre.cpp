@@ -412,8 +412,7 @@ void Fenetre::copyFinalPath()
 	if(sol == NULL)
 		return;
 
-	//Solution bestOverall(sol->getBestSol());
-	Solution bestOverall(sol->meilleureSol());
+	Solution bestOverall(sol->getBestSol());
 	vector<int> final_p;
 
 	bestOverall.getParcours(final_p);

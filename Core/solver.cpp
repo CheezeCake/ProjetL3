@@ -209,7 +209,7 @@ void Solver::selectionElitisme()
 	}
 }
 
-	template<typename T>
+template<typename T>
 int Solver::getSecteurId(const vector<Secteur<T> > &secteurs, T val)
 {
 	int d = 0;
