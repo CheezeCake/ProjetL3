@@ -85,6 +85,7 @@ void Fenetre::createPageConfig()
 	nbCitiesGen = new QDoubleSpinBox;
 	nbCitiesGen->setDecimals(0);
 	nbCitiesGen->setMinimum(3);
+    nbCitiesGen->setMaximum(numeric_limits<int>::max());
 	QPushButton *generationButton = new QPushButton("Générer");
 	QObject::connect(generationButton, SIGNAL(clicked()), this, SLOT(generate()));
 
@@ -110,6 +111,7 @@ void Fenetre::createPageConfig()
 	nbCities = new QDoubleSpinBox;
 	nbCities->setDecimals(0);
 	nbCities->setMinimum(3);
+    nbCities->setMaximum(numeric_limits<int>::max());
 	QPushButton *validateInput = new QPushButton("Valider");
 	QObject::connect(validateInput, SIGNAL(clicked()), this, SLOT(manualInput()));
 
@@ -313,9 +315,10 @@ void Fenetre::getDistances(vector<vector<double> > &dist)
 			double xj = coord[j].first;
 			double yj = coord[j].second;
 
-			double x = (xj-xi)*(xj-xi);
-			double y = (yj-yi)*(yj-yi);
-			dist[i][j] = sqrt(x+y);
+            //double x = (xj-xi)*(xj-xi);
+            //double y = (yj-yi)*(yj-yi);
+            dist[i][j] = sqrt((xj-xi)*(xj-xi)+(yj-yi)*(yj-yi));
+            //cout << i << " " << j  << " " << dist[i][j] << endl;
 		}
 	}
 }
@@ -341,7 +344,7 @@ void Fenetre::nextIt()
 
 	if(sol->fin())
 	{
-		if(finalPath.isEmpty())
+        if(finalPath.isEmpty())
 		{
 			copyFinalPath();
 			updateScore();
