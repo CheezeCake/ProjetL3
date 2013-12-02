@@ -1,4 +1,5 @@
 QMAKE=qmake-qt5
+CXX=""
 
 all:
 	@(cd ./Core && $(MAKE))
