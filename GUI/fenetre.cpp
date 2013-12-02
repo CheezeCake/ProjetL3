@@ -344,7 +344,7 @@ void Fenetre::nextIt()
 		if(finalPath.isEmpty())
 		{
 			copyFinalPath();
-			Score = finalPathCost;
+			updateScore();
 		}
 
 		QMessageBox::information(this, "Fin du solver", "Le solver a trouve le chemin optimal suivant:\n"+finalPath+"\nDe poid: "+QString::number(finalPathCost));
